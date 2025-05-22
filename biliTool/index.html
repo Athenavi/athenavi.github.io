@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://7trees.cn/static/css/tailwind.min.css" rel="stylesheet">
+    <title>AV-BV Converter</title>
+    <style>
+        .result {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto p-6">
+        <h1 class="text-2xl font-bold mb-4 text-center">AV-BV Converter</h1>
+        <h2 class="text-xl font-bold mb-4"><a href="https://b23.tv/cTvrduX">bili space</a></h2>
+
+        <form id="conversionForm" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+            <div class="mb-4">
+                <label for="av" class="block text-gray-700 text-sm font-bold mb-2">请输入 AV 号:</label>
+                <input type="number" name="av" id="av" class="block w-full p-2 border border-gray-300 rounded">
+                <input type="button" value="转换为 BV" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-2" onclick="convertToBV()">
+            </div>
+
+            <div class="mb-4">
+                <label for="BV" class="block text-gray-700 text-sm font-bold mb-2">请输入 BV 字符串:</label>
+                <input type="text" name="BV" id="BV" class="block w-full p-2 border border-gray-300 rounded">
+                <input type="button" value="转换为 AV" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-2" onclick="convertToAV()">
+            </div>
+
+            <label class="block text-gray-700 text-sm font-bold mb-2">是否导出结果?</label>
+            <div class="mb-4">
+                <label class="inline-flex items-center">
+                    <input type="radio" name="export" value="yes" class="form-radio">
+                    <span class="ml-2">是</span>
+                </label>
+                <label class="inline-flex items-center ml-4">
+                    <input type="radio" name="export" value="no" class="form-radio" checked>
+                    <span class="ml-2">否</span>
+                </label>
+            </div>
+        </form>
+
+        <div id="result" class="result"></div>
+    </div>
+
+    <script>
+        const xorn = 177451812;
+        const add = 8728348608;
+        const s = [11, 10, 3, 8, 4, 6];
+        const table = "fZodR9XQDSUm21yCkr6zBqiveYah8bt4xsWpHnJE7jL5VG3guMTKNPAwcF";
+        const tr = {};
+
+        for (let i = 0; i < 58; i++) {
+            tr[table[i]] = i;
+        }
+
+        function dec(x) {
+            let r = 0;
+            for (let i = 0; i < 6; i++) {
+                r += Math.pow(58, i) * tr[x[s[i]]];
+            }
+            return (r - add) ^ xorn;
+        }
+
+        function enc(x) {
+            x = (x ^ xorn) + add;
+            let r = "BV1  4 1 7  ";
+            for (let i = 0; i < 6; i++) {
+                r = r.split('');
+                r[s[i]] = table[Math.floor(x / Math.pow(58, i)) % 58];
+                r = r.join('');
+            }
+            return r;
+        }
+
+        function convertToBV() {
+            const av = parseInt(document.getElementById('av').value);
+            const result = enc(av);
+            displayResult(result, 'BV', av);
+        }
+
+        function convertToAV() {
+            const BV = document.getElementById('BV').value.trim();
+            const result = "av" + dec(BV);
+            displayResult(result, 'AV', BV);
+        }
+
+        function displayResult(result, type, input) {
+            const exportOption = document.querySelector('input[name="export"]:checked').value;
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = `<h2 class="text-xl font-bold mb-2">结果:</h2>
+                                  <p class="bg-gray-200 p-4 rounded">${result}</p>`;
+            if (exportOption === 'yes') {
+                exportResult(result, type, input);
+            }
+        }
+
+        function exportResult(result, type, input) {
+            const blob = new Blob([`${input} is converted to:\n${result}`], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `${type}.txt`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+    </script>
+</body>
+</html>

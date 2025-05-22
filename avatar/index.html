@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="refresh" content="0; url='./al/txNUM.png'">
+    <title>随机图片</title>
+</head>
+<body>
+    <script>
+        var num = Math.floor(Math.random() * 343) + 1;
+        document.querySelector('meta[http-equiv="refresh"]').setAttribute('content', '0; url="./al/tx' + num + '.png"');
+    </script>
+</body>
+</html>

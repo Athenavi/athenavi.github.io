@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://7trees.cn/static/css/tailwind.min.css" rel="stylesheet">
+    <title>随机图片显示</title>
+    <style>
+        .image-container {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+        }
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto p-6">
+        <h1 class="text-2xl font-bold mb-4 text-center">随机图片显示</h1>
+
+        <div class="image-container">
+            <img id="randomImage" src="" alt="随机图片">
+        </div>
+
+        <button class="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onclick="loadRandomImage()">加载随机图片</button>
+    </div>
+
+    <script>
+        const directory = "./acg/";
+        const files = [
+            "acg/1.jpg",
+            "acg/2.jpeg",
+            "acg/3.png",
+            // 添加其他图片文件名
+        ];
+
+        function getMimeTypeFromExtension(extension) {
+            switch (extension) {
+                case 'jpg':
+                case 'jpeg':
+                    return 'image/jpeg';
+                case 'png':
+                    return 'image/png';
+                default:
+                    return false;
+            }
+        }
+
+        function loadRandomImage() {
+            if (files.length === 0) {
+                alert("没有找到图片");
+                return;
+            }
+
+            const randomFile = files[Math.floor(Math.random() * files.length)];
+            const ext = randomFile.split('.').pop().toLowerCase();
+            const mimeType = getMimeTypeFromExtension(ext);
+
+            if (mimeType !== false) {
+                document.getElementById('randomImage').src = randomFile;
+                document.getElementById('randomImage').alt = "随机图片 (" + randomFile + ")";
+            } else {
+                alert("无法确定 MIME 类型");
+            }
+        }
+
+        // 初始加载随机图片
+        window.onload = loadRandomImage;
+    </script>
+</body>
+</html>
