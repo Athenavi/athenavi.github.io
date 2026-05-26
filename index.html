@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title></title>
+    <!-- HTMX -->
+    <script crossorigin="anonymous"
+            integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC"
+            src="https://unpkg.com/htmx.org@1.9.10"></script>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 在 tailwind 等之后添加 -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.25.0/tocbot.min.js" defer></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.25.0/tocbot.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.js" defer></script>
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;700&display=swap"
+          rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'Noto Sans SC', 'system-ui', 'sans-serif'],
+                        display: ['Inter', 'Noto Sans SC', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        },
+                        accent: {
+                            50: '#fdf4ff',
+                            100: '#fae8ff',
+                            200: '#f5d0fe',
+                            300: '#f0abfc',
+                            400: '#e879f9',
+                            500: '#d946ef',
+                            600: '#c026d3',
+                            700: '#a21caf',
+                            800: '#86198f',
+                            900: '#701a75',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* 全局平滑滚动与过渡 */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* 卡片悬浮效果 */
+        .hover-lift {
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .hover-lift:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px -8px rgba(0, 0, 0, 0.15);
+        }
+
+        /* 淡入动画 */
+        .fade-in {
+            animation: fadeInUp 0.4s ease forwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* 自定义滚动条 */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased min-h-screen flex flex-col">
+
+<!-- 导航栏：毛玻璃效果 -->
+<nav class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-200/60 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-16">
+            <!-- Logo区域 -->
+            <a href="https://Athenavi.github.io"
+               class="flex items-center gap-2 text-primary-600 hover:text-primary-700 transition-colors">
+                <div class="w-8 h-8 bg-primary-500 rounded-lg flex items-center justify-center shadow-md">
+                    <i class="fas fa-feather-alt text-white text-sm"></i>
+                </div>
+                <span class="text-xl font-bold tracking-tight">MarkLumeTest</span>
+            </a>
+
+            <!-- 管理员操作区 -->
+            
+        </div>
+    </div>
+</nav>
+
+<!-- 主内容区 -->
+<main class="flex-grow">
+    
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <!-- 头部 -->
+    <div class="text-center mb-16">
+        <h1 class="text-4xl font-extrabold text-slate-800 sm:text-5xl lg:text-6xl">
+            <span class="bg-clip-text text-transparent bg-gradient-to-r from-primary-500 to-accent-500">
+                MarkLume
+            </span>
+        </h1>
+        <p class="mt-4 text-lg text-slate-500 max-w-2xl mx-auto">
+            用极简记录思考，用文字雕刻时光
+        </p>
+    </div>
+
+    <!-- 工具栏 -->
+    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-10">
+        <h2 class="text-2xl font-bold text-slate-700">
+            <i class="fas fa-newspaper text-primary-500 mr-2"></i>最新文章
+        </h2>
+        <div class="relative w-full sm:w-80">
+            <input
+                type="text"
+                placeholder="搜索文章..."
+                class="w-full pl-10 pr-4 py-3 rounded-xl border border-slate-200 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-primary-300 focus:border-transparent transition-all"
+                hx-get="/articles?search="
+                hx-trigger="keyup changed delay:300ms"
+                hx-target="#article-list"
+                hx-swap="innerHTML"
+                name="search"
+            >
+            <i class="fas fa-search absolute left-3 top-3.5 text-slate-400"></i>
+        </div>
+    </div>
+
+    <!-- 文章列表（通过 HTMX 局部刷新） -->
+    <div id="article-list">
+        
+<div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+    
+    <article class="group bg-white rounded-2xl shadow-sm border border-slate-200/60 overflow-hidden hover-lift fade-in">
+        <a href="/articles/1" class="block p-6" hx-boost="true">
+            <!-- 标题 -->
+            <h3 class="text-xl font-semibold text-slate-800 group-hover:text-primary-600 transition-colors line-clamp-2">
+                 测试文章
+            </h3>
+            <!-- 摘要（假设后端有 summary 属性，否则可截断 content 纯文本） -->
+            
+            <!-- 元信息 -->
+            <div class="mt-4 flex items-center text-xs text-slate-400">
+                <i class="far fa-calendar-alt mr-1.5"></i>
+                <time>2026-05-26</time>
+                <span class="mx-2">·</span>
+                <i class="far fa-clock mr-1.5"></i>
+                <span>2026-05-26</span>
+            </div>
+        </a>
+    </article>
+    
+    <article class="group bg-white rounded-2xl shadow-sm border border-slate-200/60 overflow-hidden hover-lift fade-in">
+        <a href="/articles/2" class="block p-6" hx-boost="true">
+            <!-- 标题 -->
+            <h3 class="text-xl font-semibold text-slate-800 group-hover:text-primary-600 transition-colors line-clamp-2">
+                Hello Markdown
+            </h3>
+            <!-- 摘要（假设后端有 summary 属性，否则可截断 content 纯文本） -->
+            
+            <!-- 元信息 -->
+            <div class="mt-4 flex items-center text-xs text-slate-400">
+                <i class="far fa-calendar-alt mr-1.5"></i>
+                <time>2026-05-26</time>
+                <span class="mx-2">·</span>
+                <i class="far fa-clock mr-1.5"></i>
+                <span>2026-05-26</span>
+            </div>
+        </a>
+    </article>
+    
+    <article class="group bg-white rounded-2xl shadow-sm border border-slate-200/60 overflow-hidden hover-lift fade-in">
+        <a href="/articles/3" class="block p-6" hx-boost="true">
+            <!-- 标题 -->
+            <h3 class="text-xl font-semibold text-slate-800 group-hover:text-primary-600 transition-colors line-clamp-2">
+                测试文章
+            </h3>
+            <!-- 摘要（假设后端有 summary 属性，否则可截断 content 纯文本） -->
+            
+            <!-- 元信息 -->
+            <div class="mt-4 flex items-center text-xs text-slate-400">
+                <i class="far fa-calendar-alt mr-1.5"></i>
+                <time>2026-05-26</time>
+                <span class="mx-2">·</span>
+                <i class="far fa-clock mr-1.5"></i>
+                <span>2026-05-26</span>
+            </div>
+        </a>
+    </article>
+    
+</div>
+
+    </div>
+</div>
+
+</main>
+
+<!-- 页脚：精致简约 -->
+<footer class="bg-white border-t border-slate-200/70 mt-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div class="flex items-center gap-2 text-slate-500 text-sm">
+                <i class="fas fa-code text-primary-400"></i>
+                <span>由 <span class="font-semibold text-slate-700">FastAPI</span> + <span
+                        class="font-semibold text-slate-700">HTMX</span> + <span class="font-semibold text-slate-700">Tailwind CSS</span> 驱动</span>
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="#" class="text-slate-400 hover:text-primary-500 transition-colors text-lg">
+                    <i class="fab fa-github"></i>
+                </a>
+                <a href="#" class="text-slate-400 hover:text-primary-500 transition-colors text-lg">
+                    <i class="fab fa-twitter"></i>
+                </a>
+                <a href="#" class="text-slate-400 hover:text-primary-500 transition-colors text-lg">
+                    <i class="fab fa-linkedin-in"></i>
+                </a>
+            </div>
+        </div>
+        <div class="mt-6 pt-4 border-t border-slate-100 text-center text-xs text-slate-400">
+            © 2025 MarkLume · 简约不简单
+        </div>
+    </div>
+</footer>
+
+<!-- Toast 通知：更柔和的样式 -->
+<div id="toast"
+     class="fixed bottom-6 right-6 z-50 flex items-center gap-2 px-5 py-3 bg-white border border-slate-200 shadow-xl rounded-2xl text-slate-700 transform translate-y-24 opacity-0 transition-all duration-300 pointer-events-none">
+    <i class="fas fa-check-circle text-emerald-500 text-lg"></i>
+    <span id="toast-message" class="text-sm font-medium">操作成功</span>
+</div>
+
+<script>
+    // 显示 Toast
+    function showToast(message) {
+        const toast = document.getElementById('toast');
+        const toastMessage = document.getElementById('toast-message');
+        if (!toast || !toastMessage) return;
+
+        toastMessage.textContent = message;
+        toast.classList.remove('translate-y-24', 'opacity-0');
+        toast.classList.add('translate-y-0', 'opacity-100');
+
+        clearTimeout(window.toastTimer);
+        window.toastTimer = setTimeout(() => {
+            toast.classList.add('translate-y-24', 'opacity-0');
+            toast.classList.remove('translate-y-0', 'opacity-100');
+        }, 3000);
+    }
+
+    // 监听 HTMX 事件
+    document.body.addEventListener('htmx:afterSwap', function (evt) {
+        if (evt.detail.requestConfig.path.includes('/articles') &&
+            (evt.detail.requestConfig.verb === 'post' || evt.detail.requestConfig.verb === 'put')) {
+            showToast(evt.detail.requestConfig.verb === 'post' ? '文章发布成功 ✨' : '文章已更新');
+        }
+    });
+
+    document.body.addEventListener('htmx:afterRequest', function (evt) {
+        if (evt.detail.requestConfig.verb === 'delete' &&
+            evt.detail.requestConfig.path.includes('/articles')) {
+            showToast('文章已删除');
+        }
+    });
+</script>
+</body>
+</html>

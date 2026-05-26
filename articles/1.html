@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title></title>
+    <!-- HTMX -->
+    <script crossorigin="anonymous"
+            integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC"
+            src="https://unpkg.com/htmx.org@1.9.10"></script>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- 在 tailwind 等之后添加 -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.25.0/tocbot.min.js" defer></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.25.0/tocbot.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/easymde/dist/easymde.min.js" defer></script>
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+SC:wght@400;500;700&display=swap"
+          rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'Noto Sans SC', 'system-ui', 'sans-serif'],
+                        display: ['Inter', 'Noto Sans SC', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        },
+                        accent: {
+                            50: '#fdf4ff',
+                            100: '#fae8ff',
+                            200: '#f5d0fe',
+                            300: '#f0abfc',
+                            400: '#e879f9',
+                            500: '#d946ef',
+                            600: '#c026d3',
+                            700: '#a21caf',
+                            800: '#86198f',
+                            900: '#701a75',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* 全局平滑滚动与过渡 */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* 卡片悬浮效果 */
+        .hover-lift {
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .hover-lift:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px -8px rgba(0, 0, 0, 0.15);
+        }
+
+        /* 淡入动画 */
+        .fade-in {
+            animation: fadeInUp 0.4s ease forwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* 自定义滚动条 */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased min-h-screen flex flex-col">
+
+<!-- 导航栏：毛玻璃效果 -->
+<nav class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-200/60 shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-16">
+            <!-- Logo区域 -->
+            <a href="https://Athenavi.github.io"
+               class="flex items-center gap-2 text-primary-600 hover:text-primary-700 transition-colors">
+                <div class="w-8 h-8 bg-primary-500 rounded-lg flex items-center justify-center shadow-md">
+                    <i class="fas fa-feather-alt text-white text-sm"></i>
+                </div>
+                <span class="text-xl font-bold tracking-tight">MarkLumeTest</span>
+            </a>
+
+            <!-- 管理员操作区 -->
+            
+        </div>
+    </div>
+</nav>
+
+<!-- 主内容区 -->
+<main class="flex-grow">
+    
+<!-- 引入所需库 -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.25.0/tocbot.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.25.0/tocbot.css">
+
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="lg:grid lg:grid-cols-[1fr_250px] lg:gap-10">
+        <!-- 主内容区 -->
+        <article class="bg-white rounded-2xl shadow-sm border border-slate-200/60 overflow-hidden">
+            <div class="p-8 sm:p-10">
+                <!-- 标题区 -->
+                <header class="mb-8">
+                    <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 leading-tight">
+                         测试文章
+                    </h1>
+                    <div class="mt-3 flex flex-wrap items-center gap-2 text-sm text-slate-500">
+                        <span><i class="far fa-calendar-alt mr-1"></i> 2026年05月26日</span>
+                        <span class="text-slate-300">|</span>
+                        <span><i class="far fa-edit mr-1"></i> 2026年05月26日</span>
+                    </div>
+                </header>
+
+                <!-- 文章正文（Markdown 渲染容器） -->
+                <div id="markdown-content" class="hidden"><h1>Welcome to Leanote! 欢迎来到Leanote!</h1>
+<h2>1. 排版</h2>
+<p><strong>粗体</strong> <em>斜体</em> </p>
+<p>~~这是一段错误的文本。~~</p>
+<p>引用:</p>
+<blockquote>
+<p>引用Leanote官方的话, 为什么要做Leanote, 原因是...</p>
+</blockquote>
+<p>有充列表:
+ 1. 支持Vim
+ 2. 支持Emacs</p>
+<p>无序列表:</p>
+<ul>
+<li>项目1</li>
+<li>项目2</li>
+</ul>
+<h2>2. 图片与链接</h2>
+<p>图片:
+<img alt="leanote" src="http://leanote.com/images/logo/leanote_icon_blue.png" />
+链接:</p>
+<p><a href="http://leanote.leanote.com">这是去往Leanote官方博客的链接</a></p>
+<h2>3. 标题</h2>
+<p>以下是各级标题, 最多支持5级标题</p>
+<pre><code># h1
+## h2
+### h3
+#### h4
+##### h4
+###### h5
+</code></pre>
+<h2>4. 代码</h2>
+<p>示例:</p>
+<pre><code>function get(key) {
+    return m[key];
+}
+</code></pre>
+<p>代码高亮示例:</p>
+<pre><code class="language-javascript">/**
+* nth element in the fibonacci series.
+* @param n &gt;= 0
+* @return the nth element, &gt;= 0.
+*/
+function fib(n) {
+  var a = 1, b = 1;
+  var tmp;
+  while (--n &gt;= 0) {
+    tmp = a;
+    a += b;
+    b = tmp;
+  }
+  return a;
+}
+
+document.write(fib(10));
+</code></pre>
+<pre><code class="language-python">class Employee:
+   empCount = 0
+
+   def __init__(self, name, salary):
+        self.name = name
+        self.salary = salary
+        Employee.empCount += 1
+</code></pre>
+<h1>5. Markdown 扩展</h1>
+<p>Markdown 扩展支持:</p>
+<ul>
+<li>表格</li>
+<li>定义型列表</li>
+<li>Html 标签</li>
+<li>脚注</li>
+<li>目录</li>
+<li>时序图与流程图</li>
+<li>MathJax 公式</li>
+</ul>
+<h2>5.1 表格</h2>
+<table>
+<thead>
+<tr>
+<th>Item</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Computer</td>
+<td>\$1600</td>
+</tr>
+<tr>
+<td>Phone</td>
+<td>\$12</td>
+</tr>
+<tr>
+<td>Pipe</td>
+<td>\$1</td>
+</tr>
+</tbody>
+</table>
+<p>可以指定对齐方式, 如Item列左对齐, Value列右对齐, Qty列居中对齐</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Item</th>
+<th style="text-align: right;">Value</th>
+<th style="text-align: center;">Qty</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Computer</td>
+<td style="text-align: right;">\$1600</td>
+<td style="text-align: center;">5</td>
+</tr>
+<tr>
+<td style="text-align: left;">Phone</td>
+<td style="text-align: right;">\$12</td>
+<td style="text-align: center;">12</td>
+</tr>
+<tr>
+<td style="text-align: left;">Pipe</td>
+<td style="text-align: right;">\$1</td>
+<td style="text-align: center;">234</td>
+</tr>
+</tbody>
+</table>
+<h2>5.2 定义型列表</h2>
+<p>名词 1
+:   定义 1（左侧有一个可见的冒号和四个不可见的空格）</p>
+<p>代码块 2
+:   这是代码块的定义（左侧有一个可见的冒号和四个不可见的空格）</p>
+<pre><code>    代码块（左侧有八个不可见的空格）
+</code></pre>
+<h2>5.3 Html 标签</h2>
+<p>支持在 Markdown 语法中嵌套 Html 标签，譬如，你可以用 Html 写一个纵跨两行的表格：</p>
+<pre><code>&lt;table&gt;
+    &lt;tr&gt;
+        &lt;th rowspan="2"&gt;值班人员&lt;/th&gt;
+        &lt;th&gt;星期一&lt;/th&gt;
+        &lt;th&gt;星期二&lt;/th&gt;
+        &lt;th&gt;星期三&lt;/th&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+        &lt;td&gt;李强&lt;/td&gt;
+        &lt;td&gt;张明&lt;/td&gt;
+        &lt;td&gt;王平&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;/table&gt;
+</code></pre>
+<table>
+    <tr>
+        <th rowspan="2">值班人员</th>
+        <th>星期一</th>
+        <th>星期二</th>
+        <th>星期三</th>
+    </tr>
+    <tr>
+        <td>李强</td>
+        <td>张明</td>
+        <td>王平</td>
+    </tr>
+</table>
+
+<p><strong>提示</strong>, 如果想对图片的宽度和高度进行控制, 你也可以通过img标签, 如:</p>
+<p><img src="http://leanote.com/images/logo/leanote_icon_blue.png" width="50px" /></p>
+<h2>5.4 脚注</h2>
+<p>Leanote<a href="Leanote是一款强大的开源云笔记产品.">^footnote</a>来创建一个脚注</p>
+<h2>5.5 目录</h2>
+<p>通过 <code>[TOC]</code> 在文档中插入目录, 如:</p>
+<p>[TOC]</p>
+<h2>5.6 时序图与流程图</h2>
+<pre><code class="language-sequence">Alice-&gt;Bob: Hello Bob, how are you?
+Note right of Bob: Bob thinks
+Bob--&gt;Alice: I am good thanks!
+</code></pre>
+<p>流程图:</p>
+<pre><code class="language-flow">st=&gt;start: Start
+e=&gt;end
+op=&gt;operation: My Operation
+cond=&gt;condition: Yes or No?
+
+st-&gt;op-&gt;cond
+cond(yes)-&gt;e
+cond(no)-&gt;op
+</code></pre>
+<blockquote>
+<p><strong>提示:</strong> 更多关于时序图与流程图的语法请参考:</p>
+<ul>
+<li><a href="http://bramp.github.io/js-sequence-diagrams/">时序图语法</a></li>
+<li><a href="http://adrai.github.io/flowchart.js">流程图语法</a></li>
+</ul>
+</blockquote>
+<h2>5.7 MathJax 公式</h2>
+<p>$ 表示行内公式： </p>
+<p>质能守恒方程可以用一个很简洁的方程式 $E=mc^2$ 来表达。</p>
+<p>$$ 表示整行公式：</p>
+<p>$$\sum_{i=1}^n a_i=0$$</p>
+<p>$$f(x_1,x_x,\ldots,x_n) = x_1^2 + x_2^2 + \cdots + x_n^2 $$</p>
+<p>$$\sum^{j-1}<em>{k=0}{\widehat{\gamma}</em>{kj} z_k}$$</p>
+<p>更复杂的公式:
+$$
+\begin{eqnarray}
+\vec\nabla \times (\vec\nabla f) &amp; = &amp; 0  \cdots\cdots梯度场必是无旋场\
+\vec\nabla \cdot(\vec\nabla \times \vec F) &amp; = &amp; 0\cdots\cdots旋度场必是无散场\
+\vec\nabla \cdot (\vec\nabla f) &amp; = &amp; {\vec\nabla}^2f\
+\vec\nabla \times(\vec\nabla \times \vec F) &amp; = &amp; \vec\nabla(\vec\nabla \cdot \vec F) - {\vec\nabla}^2 \vec F\
+\end{eqnarray}
+$$</p>
+<p>访问 <a href="http://meta.math.stackexchange.com/questions/5020/mathjax-basic-tutorial-and-quick-reference">MathJax</a> 参考更多使用方法。66666666666666</p></div>
+                <div id="article-body" class="prose prose-lg max-w-none prose-slate prose-headings:scroll-mt-20
+                    prose-a:text-primary-600 prose-a:no-underline hover:prose-a:underline
+                    prose-code:before:content-none prose-code:after:content-none
+                    prose-pre:bg-slate-900 prose-pre:rounded-xl prose-img:rounded-lg">
+                    <!-- 动态填充渲染后的 HTML -->
+                </div>
+
+                <!-- 管理员操作 -->
+                
+            </div>
+        </article>
+
+        <!-- 侧边栏：文章目录 -->
+        <aside class="hidden lg:block">
+            <div class="sticky top-24">
+                <h4 class="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-4">
+                    <i class="fas fa-list-ul mr-1.5"></i>目录
+                </h4>
+                <nav id="toc" class="toc"></nav>
+            </div>
+        </aside>
+    </div>
+
+    <!-- 返回按钮 -->
+    <div class="mt-8">
+        <a href="/" class="inline-flex items-center px-4 py-2 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 transition-colors"
+           hx-boost="true">
+            <i class="fas fa-arrow-left mr-2"></i>返回文章列表
+        </a>
+    </div>
+</div>
+
+<script>
+(function() {
+    // 配置 marked：启用标题 id 并设置前缀
+    marked.setOptions({
+        headerIds: true,
+        headerPrefix: 'article-',
+        highlight: function(code, lang) {
+            if (lang && hljs.getLanguage(lang)) {
+                return hljs.highlight(code, { language: lang }).value;
+            }
+            return hljs.highlightAuto(code).value;
+        },
+        breaks: true,
+        gfm: true
+    });
+
+    // 获取 Markdown 原文并渲染
+    const mdSource = document.getElementById('markdown-content').textContent.trim();
+    const renderedHTML = marked.parse(mdSource);
+    const articleBody = document.getElementById('article-body');
+    articleBody.innerHTML = renderedHTML;
+
+    // 高亮所有代码块
+    articleBody.querySelectorAll('pre code').forEach(block => {
+        hljs.highlightElement(block);
+    });
+
+    // 兜底：确保所有标题都有 id（marked 已生成，但以防万一）
+    articleBody.querySelectorAll('h2, h3, h4, h5, h6').forEach((heading, index) => {
+        if (!heading.id) {
+            heading.id = `section-${index}`;
+        }
+    });
+
+    // 销毁旧 tocbot 实例，防止重复初始化
+    if (typeof tocbot !== 'undefined') {
+        tocbot.destroy();
+    }
+
+    // 初始化目录
+    tocbot.init({
+        tocSelector: '#toc',
+        contentSelector: '#article-body',
+        headingSelector: 'h2, h3',
+        hasInnerContainers: true,
+        linkClass: 'toc-link',
+        activeLinkClass: 'is-active-link',
+        listClass: 'toc-list',
+        listItemClass: 'toc-list-item',
+        collapseDepth: 3,
+        scrollSmooth: true,
+        scrollSmoothOffset: -80,       // 避免被固定导航栏遮挡
+        headingsOffset: -80,
+    });
+
+    // 监听 HTMX 删除完成后的重定向
+    document.body.addEventListener('htmx:afterRequest', function(e) {
+        if (e.detail.requestConfig.verb === 'delete' &&
+            e.detail.requestConfig.path.includes('/articles/')) {
+            window.location.href = '/';
+        }
+    });
+})();
+</script>
+
+<style>
+    /* 目录样式微调 */
+    .toc {
+        @apply text-sm leading-relaxed;
+    }
+    .toc-list {
+        @apply list-none p-0 m-0;
+    }
+    .toc-list-item {
+        @apply mb-1;
+    }
+    .toc-link {
+        @apply block py-1 px-3 rounded-lg text-slate-500 no-underline transition-all cursor-pointer select-none;
+    }
+    .toc-link:hover {
+        @apply bg-slate-100 text-slate-800;
+    }
+    .is-active-link {
+        @apply bg-primary-50 text-primary-700 font-medium border-l-2 border-primary-500;
+    }
+    /* 适配 prose 内的标题偏移 */
+    .prose h2, .prose h3 {
+        scroll-margin-top: 5rem;
+    }
+</style>
+
+</main>
+
+<!-- 页脚：精致简约 -->
+<footer class="bg-white border-t border-slate-200/70 mt-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div class="flex items-center gap-2 text-slate-500 text-sm">
+                <i class="fas fa-code text-primary-400"></i>
+                <span>由 <span class="font-semibold text-slate-700">FastAPI</span> + <span
+                        class="font-semibold text-slate-700">HTMX</span> + <span class="font-semibold text-slate-700">Tailwind CSS</span> 驱动</span>
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="#" class="text-slate-400 hover:text-primary-500 transition-colors text-lg">
+                    <i class="fab fa-github"></i>
+                </a>
+                <a href="#" class="text-slate-400 hover:text-primary-500 transition-colors text-lg">
+                    <i class="fab fa-twitter"></i>
+                </a>
+                <a href="#" class="text-slate-400 hover:text-primary-500 transition-colors text-lg">
+                    <i class="fab fa-linkedin-in"></i>
+                </a>
+            </div>
+        </div>
+        <div class="mt-6 pt-4 border-t border-slate-100 text-center text-xs text-slate-400">
+            © 2025 MarkLume · 简约不简单
+        </div>
+    </div>
+</footer>
+
+<!-- Toast 通知：更柔和的样式 -->
+<div id="toast"
+     class="fixed bottom-6 right-6 z-50 flex items-center gap-2 px-5 py-3 bg-white border border-slate-200 shadow-xl rounded-2xl text-slate-700 transform translate-y-24 opacity-0 transition-all duration-300 pointer-events-none">
+    <i class="fas fa-check-circle text-emerald-500 text-lg"></i>
+    <span id="toast-message" class="text-sm font-medium">操作成功</span>
+</div>
+
+<script>
+    // 显示 Toast
+    function showToast(message) {
+        const toast = document.getElementById('toast');
+        const toastMessage = document.getElementById('toast-message');
+        if (!toast || !toastMessage) return;
+
+        toastMessage.textContent = message;
+        toast.classList.remove('translate-y-24', 'opacity-0');
+        toast.classList.add('translate-y-0', 'opacity-100');
+
+        clearTimeout(window.toastTimer);
+        window.toastTimer = setTimeout(() => {
+            toast.classList.add('translate-y-24', 'opacity-0');
+            toast.classList.remove('translate-y-0', 'opacity-100');
+        }, 3000);
+    }
+
+    // 监听 HTMX 事件
+    document.body.addEventListener('htmx:afterSwap', function (evt) {
+        if (evt.detail.requestConfig.path.includes('/articles') &&
+            (evt.detail.requestConfig.verb === 'post' || evt.detail.requestConfig.verb === 'put')) {
+            showToast(evt.detail.requestConfig.verb === 'post' ? '文章发布成功 ✨' : '文章已更新');
+        }
+    });
+
+    document.body.addEventListener('htmx:afterRequest', function (evt) {
+        if (evt.detail.requestConfig.verb === 'delete' &&
+            evt.detail.requestConfig.path.includes('/articles')) {
+            showToast('文章已删除');
+        }
+    });
+</script>
+</body>
+</html>
