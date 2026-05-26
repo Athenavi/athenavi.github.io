@@ -1,0 +1,26 @@
+{
+  "version": "1.0",
+  "generated_at": "2026-05-26T15:09:11.282423",
+  "files": {
+    "index.html": {
+      "hash": "94efc3711817f1c21ebe0837268fcf86bd7c115d7973f32c83638b1e801ebee1",
+      "size": 20255,
+      "mtime": 1779779351.2782464
+    },
+    "articles/1.html": {
+      "hash": "ea1a2e9ac28fef9ccfdc209775d9e598a3174061854c4d9c49dd9a157fe1b209",
+      "size": 31185,
+      "mtime": 1779779351.2817545
+    },
+    "static/htmx.min.js": {
+      "hash": "b6768eed4f3af85b73a75054701bd60e17cac718aef2b7f6b254e5e0e2045616",
+      "size": 51007,
+      "mtime": 1779697822.6234071
+    },
+    "static/css/style.css": {
+      "hash": "ee1c3b7871a2edd72d35ca505ac9bb29f7ff8cd7107c96d5b3901137bb39733b",
+      "size": 1677,
+      "mtime": 1779697822.6234071
+    }
+  }
+}
