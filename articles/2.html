@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>My Blog</title>
+    <title>Athenavi</title>
     <!-- HTMX -->
     <script crossorigin="anonymous"
             integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC"
@@ -156,7 +156,7 @@
                 <div class="w-9 h-9 bg-neutral-900 dark:bg-white rounded-lg flex items-center justify-center transition-transform group-hover:scale-105">
                     <span class="text-white dark:text-neutral-900 font-bold text-lg">M</span>
                 </div>
-                <span class="text-lg font-semibold tracking-tight hidden sm:block">My Blog</span>
+                <span class="text-lg font-semibold tracking-tight hidden sm:block">Athenavi</span>
             </a>
 
             <!-- 桌面端导航 -->
@@ -243,103 +243,88 @@
             </header>
 
             <!-- 文章正文 -->
-            <div id="markdown-content" class="hidden"><h1>小米大模型杀疯了！最高降 99%，API 进入“厘”时代，开发者白嫖指南来了</h1>
-<p>💥 就在昨天凌晨，雷军亲自下场官宣：小米 MiMo-V2.5 全系列 <strong>永久降价</strong>，缓存命中输入价格 <strong>暴跌 99%</strong>！</p>
-<p><img alt="641" src="https://img2024.cnblogs.com/blog/2991109/202605/2991109-20260528105717785-72756775.webp" /></p>
-<p>每百万 Token 的输入成本直接压到 <strong>2.5 分钱</strong>（0.025 元），输出价格更是低到让友商沉默——MiMo-V2.5 标准版输出仅需 <strong>2 元/百万 Token</strong>，Pro 版也只要 <strong>6 元</strong>。</p>
-<p>更狠的是，小米还顺手做了一件事：<strong>取消上下文窗口分档计价</strong>，再也不用来回计算 256K 还是 1M 的账单了。</p>
-<hr />
-<h3>一、降价有多猛？一张表看明白</h3>
-<table>
-<thead>
-<tr>
-<th>模型版本</th>
-<th>输入(命中缓存)</th>
-<th>输入(未命中)</th>
-<th>输出</th>
-<th>最高降幅</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><strong>MiMo-V2.5</strong></td>
-<td>¥0.020/M</td>
-<td>¥1.00/M</td>
-<td>¥2.00/M</td>
-<td><strong>98%</strong></td>
-</tr>
-<tr>
-<td><strong>MiMo-V2.5-Pro</strong></td>
-<td>¥0.025/M</td>
-<td>¥3.00/M</td>
-<td>¥6.00/M</td>
-<td><strong>99%</strong></td>
-</tr>
-</tbody>
-</table>
-<p>换算成人话：<strong>处理一部《三体》三部曲（约 90 万字），缓存命中场景下只需几分钱</strong>。</p>
-<hr />
-<h3>二、永久降价 + 套餐加量：Token Plan 直接起飞</h3>
-<p>Token Plan 月费套餐 <strong>价格不变</strong>，但 Credits 额度暴增 <strong>5~8 倍</strong>：</p>
-<table>
-<thead>
-<tr>
-<th>套餐</th>
-<th>价格</th>
-<th>调整后 Credits</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Lite</td>
-<td>¥39</td>
-<td><strong>41 亿</strong>（原 0.6 亿）</td>
-</tr>
-<tr>
-<td>Standard</td>
-<td>¥99</td>
-<td><strong>110 亿</strong>（原 2 亿）</td>
-</tr>
-<tr>
-<td>Pro</td>
-<td>¥329</td>
-<td><strong>380 亿</strong>（原 7 亿）</td>
-</tr>
-<tr>
-<td>Max</td>
-<td>¥659</td>
-<td><strong>820 亿</strong>（原 16 亿）</td>
-</tr>
-</tbody>
-</table>
-<p>⚠️ 所有仍在有效期内的 Token Plan 用户，Credits 额度已于 5 月 27 日零点 <strong>全量重置</strong>！官方还预告，已过期用户也将有“惊喜好礼”。</p>
-<hr />
-<h3>三、为什么要降？不是慈善，是技术突破</h3>
-<p>这次降价靠的不是芯片降价，而是 <strong>推理工程优化</strong> 带来的实质性突破：</p>
-<ul>
-<li>基于 <strong>SGLang HiCache</strong> 框架，KV Cache 数据搬运量降至优化前的 <strong>近 1/7</strong></li>
-<li>可缓存 Token 量提升至原来的 <strong>近 5 倍</strong></li>
-<li>专家并行策略 + 输入长度分桶优化，大幅提升集群吞吐</li>
-</ul>
-<p>小米敢于喊出“永久性翻新价格体系”，底气来自底层工程能力。</p>
-<hr />
-<h3>四、对标 DeepSeek，国产大模型进入“成本定价”时代</h3>
-<p>MiMo-V2.5-Pro 的最终定价——缓存命中 <strong>0.025 元</strong>、未命中 <strong>3 元</strong>、输出 <strong>6 元</strong>——与 DeepSeek V4-Pro 刚刚敲定的永久价格 <strong>完全一致</strong>。</p>
-<p>这不是巧合。大模型 API 的定价逻辑，正在从“能力溢价”转向“成本导向”。谁的推理效率更高，谁就能把价格压得更低。国产大模型的价格战，已经从参数榜单打到了 <strong>推理框架和集群调度</strong> 的层面。</p>
-<hr />
-<h3>五、开源 + 1M 上下文 + 顶级 Agent 能力，这才是完全体</h3>
-<p>很多人不知道，MiMo-V2.5 系列早已 <strong>全面开源</strong>，支持商用部署和自由微调。MiMo-V2.5-Pro 拥有 <strong>1T 超大参数</strong>、<strong>100 万 Token 上下文窗口</strong>，在通用智能体和复杂软件工程维度上，正面对标 <strong>Claude Opus 4.6、GPT-5.4</strong> 等国际顶尖模型。</p>
-<p>如今价格打到“白菜价”，对于 <strong>AI Agent、代码助手、长文档处理、知识库问答</strong> 等场景来说，正是批量落地的最佳时机。</p>
-<hr />
-<h2>🎁 新用户专属福利</h2>
-<p>扫描下方二维码注册小米 MiMo 开放平台，在控制台侧边栏输入下方邀请码，即可 <strong>免费获得 ¥10 API 体验金</strong>，零成本体验 MiMo-V2.5 系列的顶级性能！</p>
-<p><img alt="GXX44R" src="https://img2024.cnblogs.com/blog/2991109/202605/2991109-20260528105740995-1699749187.png" /></p>
-<p>📋 <strong>邀请码：GXX44R</strong>
-📍 <strong>入口</strong>：注册后进入控制台 → 左侧菜单栏「邀请码」输入框 → 填入 <strong>GXX44R</strong> → 额度即时到账</p>
-<p>🔥 降价窗口刚开，现在入场就是最佳时机。用 MiMo-V2.5 搞出你的第一个爆款 AI 应用吧！</p>
-<hr />
-<p><em>参考资料：小米 MiMo 官方公告、IT之家、观察者网、西部e网、站长之家等。</em>
-<em>（本文含作者邀请码，通过该码注册新用户双方均可获得 ¥10 额度，感谢支持！）</em></p></div>
+            <div id="markdown-content" class="hidden"># 小米大模型杀疯了！最高降 99%，API 进入“厘”时代，开发者白嫖指南来了
+
+💥 就在昨天凌晨，雷军亲自下场官宣：小米 MiMo-V2.5 全系列 **永久降价**，缓存命中输入价格 **暴跌 99%**！
+
+![641](https://img2024.cnblogs.com/blog/2991109/202605/2991109-20260528105717785-72756775.webp)
+
+每百万 Token 的输入成本直接压到 **2.5 分钱**（0.025 元），输出价格更是低到让友商沉默——MiMo-V2.5 标准版输出仅需 **2 元/百万 Token**，Pro 版也只要 **6 元**。
+
+更狠的是，小米还顺手做了一件事：**取消上下文窗口分档计价**，再也不用来回计算 256K 还是 1M 的账单了。
+
+---
+
+### 一、降价有多猛？一张表看明白
+
+| 模型版本 | 输入(命中缓存) | 输入(未命中) | 输出 | 最高降幅 |
+|---|---|---|---|---|
+| **MiMo-V2.5** | ¥0.020/M | ¥1.00/M | ¥2.00/M | **98%** |
+| **MiMo-V2.5-Pro** | ¥0.025/M | ¥3.00/M | ¥6.00/M | **99%** |
+
+换算成人话：**处理一部《三体》三部曲（约 90 万字），缓存命中场景下只需几分钱**。
+
+---
+
+### 二、永久降价 + 套餐加量：Token Plan 直接起飞
+
+Token Plan 月费套餐 **价格不变**，但 Credits 额度暴增 **5~8 倍**：
+
+| 套餐 | 价格 | 调整后 Credits |
+|---|---|---|
+| Lite | ¥39 | **41 亿**（原 0.6 亿） |
+| Standard | ¥99 | **110 亿**（原 2 亿） |
+| Pro | ¥329 | **380 亿**（原 7 亿） |
+| Max | ¥659 | **820 亿**（原 16 亿） |
+
+⚠️ 所有仍在有效期内的 Token Plan 用户，Credits 额度已于 5 月 27 日零点 **全量重置**！官方还预告，已过期用户也将有“惊喜好礼”。
+
+---
+
+### 三、为什么要降？不是慈善，是技术突破
+
+这次降价靠的不是芯片降价，而是 **推理工程优化** 带来的实质性突破：
+
+- 基于 **SGLang HiCache** 框架，KV Cache 数据搬运量降至优化前的 **近 1/7**
+- 可缓存 Token 量提升至原来的 **近 5 倍**
+- 专家并行策略 + 输入长度分桶优化，大幅提升集群吞吐
+
+小米敢于喊出“永久性翻新价格体系”，底气来自底层工程能力。
+
+---
+
+### 四、对标 DeepSeek，国产大模型进入“成本定价”时代
+
+MiMo-V2.5-Pro 的最终定价——缓存命中 **0.025 元**、未命中 **3 元**、输出 **6 元**——与 DeepSeek V4-Pro 刚刚敲定的永久价格 **完全一致**。
+
+这不是巧合。大模型 API 的定价逻辑，正在从“能力溢价”转向“成本导向”。谁的推理效率更高，谁就能把价格压得更低。国产大模型的价格战，已经从参数榜单打到了 **推理框架和集群调度** 的层面。
+
+---
+
+### 五、开源 + 1M 上下文 + 顶级 Agent 能力，这才是完全体
+
+很多人不知道，MiMo-V2.5 系列早已 **全面开源**，支持商用部署和自由微调。MiMo-V2.5-Pro 拥有 **1T 超大参数**、**100 万 Token 上下文窗口**，在通用智能体和复杂软件工程维度上，正面对标 **Claude Opus 4.6、GPT-5.4** 等国际顶尖模型。
+
+如今价格打到“白菜价”，对于 **AI Agent、代码助手、长文档处理、知识库问答** 等场景来说，正是批量落地的最佳时机。
+
+---
+
+## 🎁 新用户专属福利
+
+扫描下方二维码注册小米 MiMo 开放平台，在控制台侧边栏输入下方邀请码，即可 **免费获得 ¥10 API 体验金**，零成本体验 MiMo-V2.5 系列的顶级性能！
+
+![GXX44R](https://img2024.cnblogs.com/blog/2991109/202605/2991109-20260528105740995-1699749187.png)
+
+
+📋 **邀请码：GXX44R**
+📍 **入口**：注册后进入控制台 → 左侧菜单栏「邀请码」输入框 → 填入 **GXX44R** → 额度即时到账
+
+🔥 降价窗口刚开，现在入场就是最佳时机。用 MiMo-V2.5 搞出你的第一个爆款 AI 应用吧！
+
+---
+
+*参考资料：小米 MiMo 官方公告、IT之家、观察者网、西部e网、站长之家等。*
+*（本文含作者邀请码，通过该码注册新用户双方均可获得 ¥10 额度，感谢支持！）*</div>
             <div id="article-body" class="prose prose-neutral dark:prose-invert max-w-none
                 prose-headings:font-semibold prose-headings:tracking-tight
                 prose-h2:text-2xl prose-h2:mt-12 prose-h2:mb-4
@@ -499,7 +484,7 @@
             </div>
         </div>
         <div class="mt-6 pt-6 border-t border-neutral-100 dark:border-neutral-800 text-center text-xs text-neutral-400 dark:text-neutral-600">
-            &copy;  My Blog
+            &copy;  Athenavi
         </div>
     </div>
 </footer>

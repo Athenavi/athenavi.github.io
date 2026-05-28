@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>My Blog</title>
+    <title>Athenavi</title>
     <!-- HTMX -->
     <script crossorigin="anonymous"
             integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC"
@@ -156,7 +156,7 @@
                 <div class="w-9 h-9 bg-neutral-900 dark:bg-white rounded-lg flex items-center justify-center transition-transform group-hover:scale-105">
                     <span class="text-white dark:text-neutral-900 font-bold text-lg">M</span>
                 </div>
-                <span class="text-lg font-semibold tracking-tight hidden sm:block">My Blog</span>
+                <span class="text-lg font-semibold tracking-tight hidden sm:block">Athenavi</span>
             </a>
 
             <!-- 桌面端导航 -->
@@ -243,33 +243,41 @@
             </header>
 
             <!-- 文章正文 -->
-            <div id="markdown-content" class="hidden"><h1>MarkLume</h1>
-<p><strong>极简 · 快速 · 一键部署的个人 Markdown 博客</strong></p>
-<p><img alt="Python" src="https://img.shields.io/badge/python-3.13%2B-blue" />
-<img alt="License" src="https://img.shields.io/badge/license-MIT-green" /></p>
-<blockquote>
-<p>轻如羽毛，快如闪电。</p>
-<p>所有文章以 Markdown 文件存储，零数据库依赖，只需一个 Python 环境即可运行。</p>
-<p>提供本地动态写作界面，更支持<strong>一键生成静态站点并推送至 GitHub Pages</strong>，几分钟拥有个人博客。</p>
-</blockquote>
-<hr />
-<h2>✨ 为什么选择 MarkLume？</h2>
-<ul>
-<li><strong>纯文本，永久可读</strong> – 每篇文章就是一个 <code>.md</code> 文件，用任何编辑器都能打开。</li>
-<li><strong>零数据库，迁移简单</strong> – 备份只需拷贝 <code>archive</code> 目录。</li>
-<li><strong>本地动态管理</strong> – 基于 FastAPI 的极简后台，支持在线编写、编辑、删除文章。</li>
-<li><strong>一键 GitHub Pages 部署</strong> – 无需手动配置 Actions，填写 Token 即可自动推送至 <code>你的用户名.github.io</code> 仓库。</li>
-<li><strong>轻量无侵入</strong> – 单个命令启动，无需 Docker，非常适合个人 VPS 或本地使用。</li>
-</ul>
-<hr />
-<h2>📦 快速开始</h2>
-<h3>环境要求</h3>
-<ul>
-<li>Python 3.13 或更高版本</li>
-<li>Git（用于部署）</li>
-</ul>
-<h3>安装与启动</h3>
-<pre><code class="language-bash"># 1. 克隆仓库
+            <div id="markdown-content" class="hidden"># MarkLume
+
+**极简 · 快速 · 一键部署的个人 Markdown 博客**
+
+![Python](https://img.shields.io/badge/python-3.13%2B-blue)
+![License](https://img.shields.io/badge/license-MIT-green)
+
+> 轻如羽毛，快如闪电。
+
+> 所有文章以 Markdown 文件存储，零数据库依赖，只需一个 Python 环境即可运行。
+
+> 提供本地动态写作界面，更支持**一键生成静态站点并推送至 GitHub Pages**，几分钟拥有个人博客。
+
+---
+
+## ✨ 为什么选择 MarkLume？
+
+- **纯文本，永久可读** – 每篇文章就是一个 `.md` 文件，用任何编辑器都能打开。
+- **零数据库，迁移简单** – 备份只需拷贝 `archive` 目录。
+- **本地动态管理** – 基于 FastAPI 的极简后台，支持在线编写、编辑、删除文章。
+- **一键 GitHub Pages 部署** – 无需手动配置 Actions，填写 Token 即可自动推送至 `你的用户名.github.io` 仓库。
+- **轻量无侵入** – 单个命令启动，无需 Docker，非常适合个人 VPS 或本地使用。
+
+---
+
+## 📦 快速开始
+
+### 环境要求
+- Python 3.13 或更高版本
+- Git（用于部署）
+
+### 安装与启动
+
+```bash
+# 1. 克隆仓库
 git clone https://github.com/athenavi/marklume.git
 cd marklume
 
@@ -282,72 +290,85 @@ pip install -r requirements.txt
 
 # 4. 启动本地服务
 uvicorn backend.main:app --reload
-</code></pre>
-<p>访问 <code>http://localhost:8000</code> 即可看到你的博客。<br />
-第一次启动会自动创建 <code>archive/</code> 目录，并在项目根目录生成 <code>admin_key.txt</code>（管理员密钥）。</p>
-<hr />
-<h2>⚙️ 配置</h2>
-<h3>1. 管理员密钥</h3>
-<ul>
-<li>启动后自动生成 <code>admin_key.txt</code>，其中包含一串随机字符串。</li>
-<li>访问 <code>/admin/key</code>，输入该密钥即可登录管理后台（Cookie 有效期 10 年）。</li>
-<li>如需重置，删除 <code>admin_key.txt</code> 后重启服务即可。</li>
-</ul>
-<h3>2. 站点信息</h3>
-<p>在项目根目录创建 <code>config.ini</code>（可选），自定义站点标题和链接：</p>
-<pre><code class="language-ini">[site]
+```
+
+访问 `http://localhost:8000` 即可看到你的博客。  
+第一次启动会自动创建 `archive/` 目录，并在项目根目录生成 `admin_key.txt`（管理员密钥）。
+
+---
+
+## ⚙️ 配置
+
+### 1. 管理员密钥
+- 启动后自动生成 `admin_key.txt`，其中包含一串随机字符串。
+- 访问 `/admin/key`，输入该密钥即可登录管理后台（Cookie 有效期 10 年）。
+- 如需重置，删除 `admin_key.txt` 后重启服务即可。
+
+### 2. 站点信息
+在项目根目录创建 `config.ini`（可选），自定义站点标题和链接：
+```ini
+[site]
 site_name = 我的技术笔记
 site_link = https://myblog.github.io
-</code></pre>
-<h3>3. GitHub Token（部署专用）</h3>
-<p>部署功能需要 GitHub Personal Access Token。获取方式：
+```
+
+### 3. GitHub Token（部署专用）
+部署功能需要 GitHub Personal Access Token。获取方式：
 - 登录 GitHub → Settings → Developer settings → Personal access tokens → Tokens (classic)
-- 点击 <strong>Generate new token (classic)</strong>，勾选 <code>repo</code> 全部权限，生成后复制保存。</p>
-<hr />
-<h2>📝 本地使用指南</h2>
-<h3>前台阅读</h3>
-<ul>
-<li>首页展示文章列表，点击标题阅读全文。</li>
-</ul>
-<h3>后台管理</h3>
-<ul>
-<li>访问 <code>/admin/key</code> 输入管理员密钥登录。</li>
-<li>登录后，导航栏出现“新建文章”按钮，文章页出现“编辑”和“删除”按钮。</li>
-<li>支持 Markdown 语法实时预览（前端由模板渲染，可自行扩展编辑器）。</li>
-<li><strong>上传 Markdown 文件</strong>：在新建文章页面，可直接上传本地 <code>.md</code> 文件，系统自动以文件名作为标题创建文章。</li>
-</ul>
-<h3>文章存储</h3>
-<p>所有文章保存在 <code>archive/</code> 目录下，每篇文章一个 <code>.md</code> 文件：</p>
-<pre><code>archive/
+- 点击 **Generate new token (classic)**，勾选 `repo` 全部权限，生成后复制保存。
+
+---
+
+## 📝 本地使用指南
+
+### 前台阅读
+- 首页展示文章列表，点击标题阅读全文。
+
+### 后台管理
+- 访问 `/admin/key` 输入管理员密钥登录。
+- 登录后，导航栏出现“新建文章”按钮，文章页出现“编辑”和“删除”按钮。
+- 支持 Markdown 语法实时预览（前端由模板渲染，可自行扩展编辑器）。
+- **上传 Markdown 文件**：在新建文章页面，可直接上传本地 `.md` 文件，系统自动以文件名作为标题创建文章。
+
+### 文章存储
+所有文章保存在 `archive/` 目录下，每篇文章一个 `.md` 文件：
+```
+archive/
   ├── getting-started.md
   ├── advanced-features.md
   └── migration-guide.md
-</code></pre>
-<p>文件名即为文章标题（自动处理特殊字符）。</p>
-<hr />
-<h2>🚀 一键部署到 GitHub Pages</h2>
-<blockquote>
-<p>仅支持部署到 <code>你的用户名.github.io</code> 仓库（例如 <code>athenavi.github.io</code>）。部署将强制覆盖该仓库 <code>main</code> 分支的全部内容！</p>
-</blockquote>
-<h3>步骤</h3>
-<ol>
-<li>确保本地已经运行了 MarkLume（<code>uvicorn backend.main:app</code>）。</li>
-<li>访问 <code>http://localhost:8000/deploy</code>。</li>
-<li>填写站点标题（将显示在博客头部）和你的 GitHub Token。</li>
-<li>点击“开始部署”，等待状态提示完成。</li>
-<li>几分钟后访问 <code>https://你的用户名.github.io</code> 即可看到你的个人博客。</li>
-</ol>
-<p><strong>部署过程自动完成</strong>：
+```
+文件名即为文章标题（自动处理特殊字符）。
+
+---
+
+## 🚀 一键部署到 GitHub Pages
+
+> 仅支持部署到 `你的用户名.github.io` 仓库（例如 `athenavi.github.io`）。部署将强制覆盖该仓库 `main` 分支的全部内容！
+
+### 步骤
+1. 确保本地已经运行了 MarkLume（`uvicorn backend.main:app`）。
+2. 访问 `http://localhost:8000/deploy`。
+3. 填写站点标题（将显示在博客头部）和你的 GitHub Token。
+4. 点击“开始部署”，等待状态提示完成。
+5. 几分钟后访问 `https://你的用户名.github.io` 即可看到你的个人博客。
+
+**部署过程自动完成**：
 - 从 Token 获取你的 GitHub 用户名。
 - 生成包含所有文章和静态资源的网站。
-- 创建/覆盖 <code>用户名.github.io</code> 仓库（公开）。
-- 推送至 <code>main</code> 分支，GitHub Pages 自动生效。</p>
-<p><strong>注意</strong>：
+- 创建/覆盖 `用户名.github.io` 仓库（公开）。
+- 推送至 `main` 分支，GitHub Pages 自动生效。
+
+**注意**：
 - Token 仅用于本次部署，不会保存在服务器上。
-- 如需更新博客，只需在本地修改/新增文章，然后再次执行部署即可。</p>
-<hr />
-<h2>📂 项目结构</h2>
-<pre><code>marklume/
+- 如需更新博客，只需在本地修改/新增文章，然后再次执行部署即可。
+
+---
+
+## 📂 项目结构
+
+```
+marklume/
 ├── archive/                 # 文章存档（.md 文件）
 ├── backend/
 │   ├── main.py              # FastAPI 应用入口
@@ -362,37 +383,50 @@ site_link = https://myblog.github.io
 ├── config.ini               # 可选站点配置
 ├── requirements.txt
 └── README.md
-</code></pre>
-<hr />
-<h2>💻 命令行部署（可选）</h2>
-<p>除了 Web 界面，你也可以直接用命令行生成并部署：</p>
-<pre><code class="language-bash">python deploy_cli.py --title &quot;我的博客&quot; --token ghp_xxxxxxxxxxxx
-</code></pre>
-<hr />
-<h2>🤝 贡献</h2>
-<p>欢迎提交 Issue 和 Pull Request！<br />
-建议先开 Issue 讨论你的想法，避免重复工作。</p>
-<ol>
-<li>Fork 本仓库</li>
-<li>创建特性分支 (<code>git checkout -b feature/amazing-feature</code>)</li>
-<li>提交更改 (<code>git commit -m 'Add some amazing feature'</code>)</li>
-<li>推送到分支 (<code>git push origin feature/amazing-feature</code>)</li>
-<li>发起 Pull Request</li>
-</ol>
-<hr />
-<h2>📜 许可证</h2>
-<p>基于 MIT 许可证开源。你可以自由使用、修改和分发本项目，但需保留原作者署名。</p>
-<hr />
-<h2>🙏 致谢</h2>
-<p>MarkLume 的设计灵感来源于以下项目：
-- <a href="https://docsify.js.org/">Docsify</a> – 动态文档生成
-- <a href="https://htmx.org/">htmx</a> – 轻量前端交互理念
-- <a href="https://jekyllrb.com/">Jekyll</a> – 静态网站生成先驱</p>
-<hr />
-<blockquote>
-<p><strong>MarkLume</strong> © 2025 Athenavi<br />
-用最简单的工具，写下最认真的思考。</p>
-</blockquote></div>
+```
+
+---
+
+## 💻 命令行部署（可选）
+
+除了 Web 界面，你也可以直接用命令行生成并部署：
+
+```bash
+python deploy_cli.py --title "我的博客" --token ghp_xxxxxxxxxxxx
+```
+
+---
+
+## 🤝 贡献
+
+欢迎提交 Issue 和 Pull Request！  
+建议先开 Issue 讨论你的想法，避免重复工作。
+
+1. Fork 本仓库
+2. 创建特性分支 (`git checkout -b feature/amazing-feature`)
+3. 提交更改 (`git commit -m 'Add some amazing feature'`)
+4. 推送到分支 (`git push origin feature/amazing-feature`)
+5. 发起 Pull Request
+
+---
+
+## 📜 许可证
+
+基于 MIT 许可证开源。你可以自由使用、修改和分发本项目，但需保留原作者署名。
+
+---
+
+## 🙏 致谢
+
+MarkLume 的设计灵感来源于以下项目：
+- [Docsify](https://docsify.js.org/) – 动态文档生成
+- [htmx](https://htmx.org/) – 轻量前端交互理念
+- [Jekyll](https://jekyllrb.com/) – 静态网站生成先驱
+
+---
+
+> **MarkLume** © 2025 Athenavi  
+> 用最简单的工具，写下最认真的思考。</div>
             <div id="article-body" class="prose prose-neutral dark:prose-invert max-w-none
                 prose-headings:font-semibold prose-headings:tracking-tight
                 prose-h2:text-2xl prose-h2:mt-12 prose-h2:mb-4
@@ -552,7 +586,7 @@ site_link = https://myblog.github.io
             </div>
         </div>
         <div class="mt-6 pt-6 border-t border-neutral-100 dark:border-neutral-800 text-center text-xs text-neutral-400 dark:text-neutral-600">
-            &copy;  My Blog
+            &copy;  Athenavi
         </div>
     </div>
 </footer>
