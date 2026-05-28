@@ -204,123 +204,278 @@
 <!-- 主内容区 -->
 <main class="flex-grow">
     
-<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
-    <!-- 头部区域 -->
-    <header class="mb-12 sm:mb-16">
-        <div class="max-w-2xl">
-            <h1 class="text-4xl sm:text-5xl font-bold tracking-tight text-neutral-900 dark:text-white">
-                Athenavi-Github
-            </h1>
-            <p class="mt-4 text-lg text-neutral-600 dark:text-neutral-400 leading-relaxed">
-                用极简记录思考，用文字雕刻时光
-            </p>
-        </div>
-    </header>
+<!-- 引入所需库 -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css" media="(prefers-color-scheme: dark)">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css" media="(prefers-color-scheme: light)">
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.25.0/tocbot.min.js"></script>
 
-    <!-- 工具栏 -->
-    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
-        <h2 class="text-sm font-medium text-neutral-500 dark:text-neutral-400 uppercase tracking-wider">
-            最新文章
-        </h2>
-        <!-- 搜索框 -->
-        <div class="relative w-full sm:w-72">
-            <input
-                type="text"
-                placeholder="搜索文章..."
-                class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white placeholder-neutral-400 dark:placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-neutral-900 dark:focus:ring-white focus:border-transparent transition-all text-sm"
-                hx-get="/articles"
-                hx-trigger="keyup changed delay:300ms"
-                hx-target="#article-list"
-                hx-swap="innerHTML"
-                hx-include="this"
-                name="search"
-                value=""
-            >
-            <i class="fas fa-search absolute left-3.5 top-3 text-neutral-400 dark:text-neutral-500 text-sm"></i>
-        </div>
+<div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="lg:grid lg:grid-cols-[1fr_220px] lg:gap-12">
+        <!-- 主内容区 -->
+        <article class="min-w-0">
+            <!-- 返回链接 -->
+            <div class="mb-8">
+                <a href="/" class="inline-flex items-center gap-2 text-sm text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white transition-colors group" hx-boost="true">
+                    <i class="fas fa-arrow-left text-xs group-hover:-translate-x-1 transition-transform"></i>
+                    <span>返回列表</span>
+                </a>
+            </div>
+
+            <!-- 标题区 -->
+            <header class="mb-10">
+                <h1 class="text-3xl sm:text-4xl font-bold text-neutral-900 dark:text-white leading-tight tracking-tight">
+                    mimo模型降价
+                </h1>
+                <div class="mt-4 flex flex-wrap items-center gap-4 text-sm text-neutral-500 dark:text-neutral-400">
+                    <span class="inline-flex items-center gap-1.5">
+                        <i class="far fa-calendar text-neutral-400 dark:text-neutral-500"></i>
+                        <time>2026年05月28日</time>
+                    </span>
+                    
+                    <span class="inline-flex items-center gap-1.5">
+                        <i class="far fa-edit text-neutral-400 dark:text-neutral-500"></i>
+                        <time>更新于 2026年05月28日</time>
+                    </span>
+                    
+                </div>
+            </header>
+
+            <!-- 文章正文 -->
+            <div id="markdown-content" class="hidden"><h1>小米大模型杀疯了！最高降 99%，API 进入“厘”时代，开发者白嫖指南来了</h1>
+<p>💥 就在昨天凌晨，雷军亲自下场官宣：小米 MiMo-V2.5 全系列 <strong>永久降价</strong>，缓存命中输入价格 <strong>暴跌 99%</strong>！</p>
+<p><img alt="641" src="https://img2024.cnblogs.com/blog/2991109/202605/2991109-20260528105717785-72756775.webp" /></p>
+<p>每百万 Token 的输入成本直接压到 <strong>2.5 分钱</strong>（0.025 元），输出价格更是低到让友商沉默——MiMo-V2.5 标准版输出仅需 <strong>2 元/百万 Token</strong>，Pro 版也只要 <strong>6 元</strong>。</p>
+<p>更狠的是，小米还顺手做了一件事：<strong>取消上下文窗口分档计价</strong>，再也不用来回计算 256K 还是 1M 的账单了。</p>
+<hr />
+<h3>一、降价有多猛？一张表看明白</h3>
+<table>
+<thead>
+<tr>
+<th>模型版本</th>
+<th>输入(命中缓存)</th>
+<th>输入(未命中)</th>
+<th>输出</th>
+<th>最高降幅</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>MiMo-V2.5</strong></td>
+<td>¥0.020/M</td>
+<td>¥1.00/M</td>
+<td>¥2.00/M</td>
+<td><strong>98%</strong></td>
+</tr>
+<tr>
+<td><strong>MiMo-V2.5-Pro</strong></td>
+<td>¥0.025/M</td>
+<td>¥3.00/M</td>
+<td>¥6.00/M</td>
+<td><strong>99%</strong></td>
+</tr>
+</tbody>
+</table>
+<p>换算成人话：<strong>处理一部《三体》三部曲（约 90 万字），缓存命中场景下只需几分钱</strong>。</p>
+<hr />
+<h3>二、永久降价 + 套餐加量：Token Plan 直接起飞</h3>
+<p>Token Plan 月费套餐 <strong>价格不变</strong>，但 Credits 额度暴增 <strong>5~8 倍</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>套餐</th>
+<th>价格</th>
+<th>调整后 Credits</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Lite</td>
+<td>¥39</td>
+<td><strong>41 亿</strong>（原 0.6 亿）</td>
+</tr>
+<tr>
+<td>Standard</td>
+<td>¥99</td>
+<td><strong>110 亿</strong>（原 2 亿）</td>
+</tr>
+<tr>
+<td>Pro</td>
+<td>¥329</td>
+<td><strong>380 亿</strong>（原 7 亿）</td>
+</tr>
+<tr>
+<td>Max</td>
+<td>¥659</td>
+<td><strong>820 亿</strong>（原 16 亿）</td>
+</tr>
+</tbody>
+</table>
+<p>⚠️ 所有仍在有效期内的 Token Plan 用户，Credits 额度已于 5 月 27 日零点 <strong>全量重置</strong>！官方还预告，已过期用户也将有“惊喜好礼”。</p>
+<hr />
+<h3>三、为什么要降？不是慈善，是技术突破</h3>
+<p>这次降价靠的不是芯片降价，而是 <strong>推理工程优化</strong> 带来的实质性突破：</p>
+<ul>
+<li>基于 <strong>SGLang HiCache</strong> 框架，KV Cache 数据搬运量降至优化前的 <strong>近 1/7</strong></li>
+<li>可缓存 Token 量提升至原来的 <strong>近 5 倍</strong></li>
+<li>专家并行策略 + 输入长度分桶优化，大幅提升集群吞吐</li>
+</ul>
+<p>小米敢于喊出“永久性翻新价格体系”，底气来自底层工程能力。</p>
+<hr />
+<h3>四、对标 DeepSeek，国产大模型进入“成本定价”时代</h3>
+<p>MiMo-V2.5-Pro 的最终定价——缓存命中 <strong>0.025 元</strong>、未命中 <strong>3 元</strong>、输出 <strong>6 元</strong>——与 DeepSeek V4-Pro 刚刚敲定的永久价格 <strong>完全一致</strong>。</p>
+<p>这不是巧合。大模型 API 的定价逻辑，正在从“能力溢价”转向“成本导向”。谁的推理效率更高，谁就能把价格压得更低。国产大模型的价格战，已经从参数榜单打到了 <strong>推理框架和集群调度</strong> 的层面。</p>
+<hr />
+<h3>五、开源 + 1M 上下文 + 顶级 Agent 能力，这才是完全体</h3>
+<p>很多人不知道，MiMo-V2.5 系列早已 <strong>全面开源</strong>，支持商用部署和自由微调。MiMo-V2.5-Pro 拥有 <strong>1T 超大参数</strong>、<strong>100 万 Token 上下文窗口</strong>，在通用智能体和复杂软件工程维度上，正面对标 <strong>Claude Opus 4.6、GPT-5.4</strong> 等国际顶尖模型。</p>
+<p>如今价格打到“白菜价”，对于 <strong>AI Agent、代码助手、长文档处理、知识库问答</strong> 等场景来说，正是批量落地的最佳时机。</p>
+<hr />
+<h2>🎁 新用户专属福利</h2>
+<p>扫描下方二维码注册小米 MiMo 开放平台，在控制台侧边栏输入下方邀请码，即可 <strong>免费获得 ¥10 API 体验金</strong>，零成本体验 MiMo-V2.5 系列的顶级性能！</p>
+<p><img alt="GXX44R" src="https://img2024.cnblogs.com/blog/2991109/202605/2991109-20260528105740995-1699749187.png" /></p>
+<p>📋 <strong>邀请码：GXX44R</strong>
+📍 <strong>入口</strong>：注册后进入控制台 → 左侧菜单栏「邀请码」输入框 → 填入 <strong>GXX44R</strong> → 额度即时到账</p>
+<p>🔥 降价窗口刚开，现在入场就是最佳时机。用 MiMo-V2.5 搞出你的第一个爆款 AI 应用吧！</p>
+<hr />
+<p><em>参考资料：小米 MiMo 官方公告、IT之家、观察者网、西部e网、站长之家等。</em>
+<em>（本文含作者邀请码，通过该码注册新用户双方均可获得 ¥10 额度，感谢支持！）</em></p></div>
+            <div id="article-body" class="prose prose-neutral dark:prose-invert max-w-none
+                prose-headings:font-semibold prose-headings:tracking-tight
+                prose-h2:text-2xl prose-h2:mt-12 prose-h2:mb-4
+                prose-h3:text-xl prose-h3:mt-8 prose-h3:mb-3
+                prose-p:leading-relaxed prose-p:text-neutral-600 dark:prose-p:text-neutral-300
+                prose-a:text-neutral-900 dark:prose-a:text-white prose-a:underline prose-a:underline-offset-2 prose-a:decoration-neutral-300 dark:prose-a:decoration-neutral-600 hover:prose-a:decoration-neutral-900 dark:hover:prose-a:decoration-white
+                prose-code:before:content-none prose-code:after:content-none prose-code:bg-neutral-100 dark:prose-code:bg-neutral-800 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-sm prose-code:font-normal
+                prose-pre:bg-neutral-900 dark:prose-pre:bg-neutral-800 prose-pre:rounded-xl prose-pre:border prose-pre:border-neutral-800 dark:prose-pre:border-neutral-700
+                prose-img:rounded-xl prose-img:shadow-lg
+                prose-blockquote:border-neutral-300 dark:prose-blockquote:border-neutral-700 prose-blockquote:not-italic prose-blockquote:text-neutral-600 dark:prose-blockquote:text-neutral-400
+                prose-li:text-neutral-600 dark:prose-li:text-neutral-300
+                prose-hr:border-neutral-200 dark:prose-hr:border-neutral-800">
+            </div>
+
+            <!-- 管理员操作 -->
+            
+        </article>
+
+        <!-- 侧边栏：文章目录 -->
+        <aside class="hidden lg:block">
+            <div class="sticky top-24">
+                <h4 class="text-xs font-semibold text-neutral-400 dark:text-neutral-500 uppercase tracking-wider mb-4">
+                    目录
+                </h4>
+                <nav id="toc" class="toc text-sm"></nav>
+            </div>
+        </aside>
     </div>
-
-    <!-- 文章列表 -->
-    <div id="article-list">
-        
-<div class="grid gap-6 sm:gap-8">
-    
-    <article class="group animate-fade-in" style="animation-delay: 0ms">
-        <a href="/articles/1" class="block p-6 -mx-6 rounded-2xl hover:bg-neutral-50 dark:hover:bg-neutral-900/50 transition-colors" hx-boost="true">
-            <div class="flex flex-col sm:flex-row sm:items-start gap-4">
-                <!-- 日期（桌面端左侧） -->
-                <div class="hidden sm:block sm:w-28 flex-shrink-0">
-                    <time class="text-sm text-neutral-400 dark:text-neutral-500 tabular-nums">
-                        2026-05-26
-                    </time>
-                </div>
-                
-                <!-- 内容区 -->
-                <div class="flex-1 min-w-0">
-                    <h3 class="text-lg font-semibold text-neutral-900 dark:text-white group-hover:text-neutral-600 dark:group-hover:text-neutral-300 transition-colors line-clamp-2">
-                        Hello Markdown
-                    </h3>
-                    
-                    
-                    
-                    <!-- 移动端日期 -->
-                    <div class="mt-3 sm:hidden">
-                        <time class="text-xs text-neutral-400 dark:text-neutral-500 tabular-nums">
-                            2026-05-26
-                        </time>
-                    </div>
-                </div>
-
-                <!-- 箭头 -->
-                <div class="hidden sm:flex items-center">
-                    <i class="fas fa-arrow-right text-neutral-300 dark:text-neutral-600 group-hover:text-neutral-500 dark:group-hover:text-neutral-400 group-hover:translate-x-1 transition-all"></i>
-                </div>
-            </div>
-        </a>
-    </article>
-    
-    <article class="group animate-fade-in" style="animation-delay: 50ms">
-        <a href="/articles/2" class="block p-6 -mx-6 rounded-2xl hover:bg-neutral-50 dark:hover:bg-neutral-900/50 transition-colors" hx-boost="true">
-            <div class="flex flex-col sm:flex-row sm:items-start gap-4">
-                <!-- 日期（桌面端左侧） -->
-                <div class="hidden sm:block sm:w-28 flex-shrink-0">
-                    <time class="text-sm text-neutral-400 dark:text-neutral-500 tabular-nums">
-                        2026-05-28
-                    </time>
-                </div>
-                
-                <!-- 内容区 -->
-                <div class="flex-1 min-w-0">
-                    <h3 class="text-lg font-semibold text-neutral-900 dark:text-white group-hover:text-neutral-600 dark:group-hover:text-neutral-300 transition-colors line-clamp-2">
-                        mimo模型降价
-                    </h3>
-                    
-                    
-                    
-                    <!-- 移动端日期 -->
-                    <div class="mt-3 sm:hidden">
-                        <time class="text-xs text-neutral-400 dark:text-neutral-500 tabular-nums">
-                            2026-05-28
-                        </time>
-                    </div>
-                </div>
-
-                <!-- 箭头 -->
-                <div class="hidden sm:flex items-center">
-                    <i class="fas fa-arrow-right text-neutral-300 dark:text-neutral-600 group-hover:text-neutral-500 dark:group-hover:text-neutral-400 group-hover:translate-x-1 transition-all"></i>
-                </div>
-            </div>
-        </a>
-    </article>
-    
 </div>
 
-<!-- 分页 -->
+<script>
+(function() {
+    marked.setOptions({
+        headerIds: true,
+        headerPrefix: 'heading-',
+        highlight: function(code, lang) {
+            if (lang && hljs.getLanguage(lang)) {
+                return hljs.highlight(code, { language: lang }).value;
+            }
+            return hljs.highlightAuto(code).value;
+        },
+        breaks: true,
+        gfm: true
+    });
 
+    const mdSource = document.getElementById('markdown-content').textContent.trim();
+    const renderedHTML = marked.parse(mdSource);
+    const articleBody = document.getElementById('article-body');
+    articleBody.innerHTML = renderedHTML;
 
+    articleBody.querySelectorAll('pre code').forEach(block => {
+        hljs.highlightElement(block);
+    });
 
-    </div>
-</div>
+    articleBody.querySelectorAll('h2, h3, h4, h5, h6').forEach((heading, index) => {
+        if (!heading.id) {
+            heading.id = `section-${index}`;
+        }
+    });
+
+    if (typeof tocbot !== 'undefined') {
+        tocbot.destroy();
+    }
+
+    tocbot.init({
+        tocSelector: '#toc',
+        contentSelector: '#article-body',
+        headingSelector: 'h2, h3',
+        hasInnerContainers: true,
+        linkClass: 'toc-link',
+        activeLinkClass: 'is-active-link',
+        listClass: 'toc-list',
+        listItemClass: 'toc-list-item',
+        collapseDepth: 3,
+        scrollSmooth: true,
+        scrollSmoothOffset: -80,
+        headingsOffset: -80,
+    });
+
+    document.body.addEventListener('htmx:afterRequest', function(e) {
+        if (e.detail.requestConfig.verb === 'delete' &&
+            e.detail.requestConfig.path.includes('/articles/')) {
+            window.location.href = '/';
+        }
+    });
+})();
+</script>
+
+<style>
+    .toc-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+    .toc-list-item {
+        margin-bottom: 0.25rem;
+    }
+    .toc-link {
+        display: block;
+        padding: 0.375rem 0.75rem;
+        border-radius: 0.5rem;
+        color: #6b7280;
+        text-decoration: none;
+        transition: all 0.15s ease;
+        cursor: pointer;
+        border-left: 2px solid transparent;
+    }
+    .dark .toc-link {
+        color: #9ca3af;
+    }
+    .toc-link:hover {
+        color: #111827;
+        background: #f3f4f6;
+    }
+    .dark .toc-link:hover {
+        color: #f9fafb;
+        background: #1f2937;
+    }
+    .is-active-link {
+        color: #111827 !important;
+        background: #f3f4f6;
+        border-left-color: #111827;
+        font-weight: 500;
+    }
+    .dark .is-active-link {
+        color: #f9fafb !important;
+        background: #1f2937;
+        border-left-color: #f9fafb;
+    }
+    .toc-list .toc-list {
+        padding-left: 1rem;
+    }
+    .prose h2, .prose h3 {
+        scroll-margin-top: 5rem;
+    }
+</style>
 
 </main>
 
