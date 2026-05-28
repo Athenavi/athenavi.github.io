@@ -1,21 +1,16 @@
 {
   "version": "1.0",
-  "generated_at": "2026-05-28T11:42:55.746143",
+  "generated_at": "2026-05-28T13:04:45.153765",
   "files": {
     "index.html": {
-      "hash": "914e53482f302ebd5e108fb3b7b147353ac860216bb7ef9c136b67a33ac2de47",
-      "size": 23562,
-      "mtime": 1779939775.741577
+      "hash": "38abc0da8b20169f0a0d296e93164c0a0880ca92d7178633bf430d24c21343cc",
+      "size": 27357,
+      "mtime": 1779944685.1481528
     },
     "articles/1.html": {
-      "hash": "b0dc76fa62cd02d6fe148bcd080bf8c3a5dea320c85e185c5c05c66944673870",
-      "size": 30018,
-      "mtime": 1779939775.745085
-    },
-    "articles/2.html": {
-      "hash": "96d4cd2c8ae26d4337f3866d890e10625016ab45cefa678ac7b0508abcac7c58",
-      "size": 27926,
-      "mtime": 1779939775.7460842
+      "hash": "edc5ecb61ad825d15d0b63b0f898ac54c5ddff83294993894cff8b007a2cd61c",
+      "size": 30651,
+      "mtime": 1779944685.1521525
     },
     "pages/html-anything-1779937642261.html": {
       "hash": "5c5c3936599262315b2299be697ee830666c12faec46f36106afaa285254c175",
@@ -31,6 +26,11 @@
       "hash": "ee1c3b7871a2edd72d35ca505ac9bb29f7ff8cd7107c96d5b3901137bb39733b",
       "size": 1677,
       "mtime": 1779697822.6234071
+    },
+    "cate/tech/2.html": {
+      "hash": "cd06d74b4d9e7fa727f55c708100ae86f40e0afaf1c4d202f28aebae0158abf1",
+      "size": 29024,
+      "mtime": 1779944685.153308
     }
   }
 }

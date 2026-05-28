@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>Athenavi</title>
+    <title>atheanvi</title>
     <!-- HTMX -->
     <script crossorigin="anonymous"
             integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC"
@@ -73,7 +73,10 @@
             }
         }
     </script>
-    <style>
+    <style type="text/tailwindcss">
+        /* 强制 class-based dark mode（兼容 Tailwind CDN v4） */
+        @custom-variant dark (&:where(.dark, .dark *));
+
         /* 全局样式 */
         body {
             font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
@@ -156,7 +159,7 @@
                 <div class="w-9 h-9 bg-neutral-900 dark:bg-white rounded-lg flex items-center justify-center transition-transform group-hover:scale-105">
                     <span class="text-white dark:text-neutral-900 font-bold text-lg">M</span>
                 </div>
-                <span class="text-lg font-semibold tracking-tight hidden sm:block">Athenavi</span>
+                <span class="text-lg font-semibold tracking-tight hidden sm:block">atheanvi</span>
             </a>
 
             <!-- 桌面端导航 -->
@@ -170,11 +173,11 @@
             <!-- 右侧操作区 -->
             <div class="flex items-center gap-2">
                 <!-- 主题切换 -->
-                <button id="theme-toggle" 
+                <button id="theme-toggle"
                         class="w-10 h-10 flex items-center justify-center rounded-full text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-all"
                         aria-label="切换主题">
-                    <i class="fas fa-sun text-lg dark:hidden"></i>
-                    <i class="fas fa-moon text-lg hidden dark:block"></i>
+                    <i data-theme-icon="light" class="fas fa-sun text-lg"></i>
+                    <i data-theme-icon="dark" class="fas fa-moon text-lg" style="display:none"></i>
                 </button>
 
                 
@@ -209,7 +212,7 @@
     <header class="mb-12 sm:mb-16">
         <div class="max-w-2xl">
             <h1 class="text-4xl sm:text-5xl font-bold tracking-tight text-neutral-900 dark:text-white">
-                Athenavi
+                atheanvi
             </h1>
             <p class="mt-4 text-lg text-neutral-600 dark:text-neutral-400 leading-relaxed">
                 用极简记录思考，用文字雕刻时光
@@ -250,102 +253,162 @@
         <!-- 搜索框 -->
         <div class="relative w-full sm:w-72">
             <input
+                id="search-input"
                 type="text"
                 placeholder="搜索文章..."
                 class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 text-neutral-900 dark:text-white placeholder-neutral-400 dark:placeholder-neutral-500 focus:outline-none focus:ring-2 focus:ring-neutral-900 dark:focus:ring-white focus:border-transparent transition-all text-sm"
-                hx-get="/articles"
-                hx-trigger="keyup changed delay:300ms"
-                hx-target="#article-list"
-                hx-swap="innerHTML"
-                hx-include="this"
-                name="search"
-                value=""
             >
             <i class="fas fa-search absolute left-3.5 top-3 text-neutral-400 dark:text-neutral-500 text-sm"></i>
         </div>
     </div>
 
-    <!-- 文章列表 -->
+    <!-- 文章列表（按分类分组） -->
     <div id="article-list">
         
-<div class="grid gap-6 sm:gap-8">
-    
-    <article class="group animate-fade-in" style="animation-delay: 0ms">
-        <a href="/articles/1" class="block p-6 -mx-6 rounded-2xl hover:bg-neutral-50 dark:hover:bg-neutral-900/50 transition-colors" hx-boost="true">
-            <div class="flex flex-col sm:flex-row sm:items-start gap-4">
-                <!-- 日期（桌面端左侧） -->
-                <div class="hidden sm:block sm:w-28 flex-shrink-0">
-                    <time class="text-sm text-neutral-400 dark:text-neutral-500 tabular-nums">
-                        2026-05-26
-                    </time>
-                </div>
-                
-                <!-- 内容区 -->
-                <div class="flex-1 min-w-0">
-                    <h3 class="text-lg font-semibold text-neutral-900 dark:text-white group-hover:text-neutral-600 dark:group-hover:text-neutral-300 transition-colors line-clamp-2">
-                        Hello Markdown
-                    </h3>
-                    
-                    
-                    
-                    <!-- 移动端日期 -->
-                    <div class="mt-3 sm:hidden">
-                        <time class="text-xs text-neutral-400 dark:text-neutral-500 tabular-nums">
+
+<div class="category-group mb-10" data-category="">
+    <h3 class="flex items-center gap-2 text-sm font-semibold text-neutral-500 dark:text-neutral-400 uppercase tracking-wider mb-4">
+        <i class="fas fa-folder text-neutral-400 dark:text-neutral-500 text-xs"></i>
+        未分类
+        <span class="text-xs font-normal text-neutral-400 dark:text-neutral-500">(1)</span>
+    </h3>
+    <div class="grid gap-6 sm:gap-8">
+        
+        <article class="group animate-fade-in" style="animation-delay: 0ms" data-title="Hello Markdown">
+            <a href="/articles/1" class="block p-6 -mx-6 rounded-2xl hover:bg-neutral-50 dark:hover:bg-neutral-900/50 transition-colors" hx-boost="true">
+                <div class="flex flex-col sm:flex-row sm:items-start gap-4">
+                    <!-- 日期（桌面端左侧） -->
+                    <div class="hidden sm:block sm:w-28 flex-shrink-0">
+                        <time class="text-sm text-neutral-400 dark:text-neutral-500 tabular-nums">
                             2026-05-26
                         </time>
                     </div>
-                </div>
+                    
+                    <!-- 内容区 -->
+                    <div class="flex-1 min-w-0">
+                        <h3 class="text-lg font-semibold text-neutral-900 dark:text-white group-hover:text-neutral-600 dark:group-hover:text-neutral-300 transition-colors line-clamp-2">
+                            Hello Markdown
+                        </h3>
+                        
+                        
+                        
+                        <!-- 移动端日期 -->
+                        <div class="mt-3 sm:hidden">
+                            <time class="text-xs text-neutral-400 dark:text-neutral-500 tabular-nums">
+                                2026-05-26
+                            </time>
+                        </div>
+                    </div>
 
-                <!-- 箭头 -->
-                <div class="hidden sm:flex items-center">
-                    <i class="fas fa-arrow-right text-neutral-300 dark:text-neutral-600 group-hover:text-neutral-500 dark:group-hover:text-neutral-400 group-hover:translate-x-1 transition-all"></i>
+                    <!-- 箭头 -->
+                    <div class="hidden sm:flex items-center">
+                        <i class="fas fa-arrow-right text-neutral-300 dark:text-neutral-600 group-hover:text-neutral-500 dark:group-hover:text-neutral-400 group-hover:translate-x-1 transition-all"></i>
+                    </div>
                 </div>
-            </div>
-        </a>
-    </article>
-    
-    <article class="group animate-fade-in" style="animation-delay: 50ms">
-        <a href="/articles/2" class="block p-6 -mx-6 rounded-2xl hover:bg-neutral-50 dark:hover:bg-neutral-900/50 transition-colors" hx-boost="true">
-            <div class="flex flex-col sm:flex-row sm:items-start gap-4">
-                <!-- 日期（桌面端左侧） -->
-                <div class="hidden sm:block sm:w-28 flex-shrink-0">
-                    <time class="text-sm text-neutral-400 dark:text-neutral-500 tabular-nums">
-                        2026-05-28
-                    </time>
-                </div>
-                
-                <!-- 内容区 -->
-                <div class="flex-1 min-w-0">
-                    <h3 class="text-lg font-semibold text-neutral-900 dark:text-white group-hover:text-neutral-600 dark:group-hover:text-neutral-300 transition-colors line-clamp-2">
-                        mimo模型降价
-                    </h3>
-                    
-                    
-                    
-                    <!-- 移动端日期 -->
-                    <div class="mt-3 sm:hidden">
-                        <time class="text-xs text-neutral-400 dark:text-neutral-500 tabular-nums">
+            </a>
+        </article>
+        
+    </div>
+</div>
+
+<div class="category-group mb-10" data-category="tech">
+    <h3 class="flex items-center gap-2 text-sm font-semibold text-neutral-500 dark:text-neutral-400 uppercase tracking-wider mb-4">
+        <i class="fas fa-folder text-neutral-400 dark:text-neutral-500 text-xs"></i>
+        tech
+        <span class="text-xs font-normal text-neutral-400 dark:text-neutral-500">(1)</span>
+    </h3>
+    <div class="grid gap-6 sm:gap-8">
+        
+        <article class="group animate-fade-in" style="animation-delay: 0ms" data-title="mimo模型降价">
+            <a href="/cate/tech/2" class="block p-6 -mx-6 rounded-2xl hover:bg-neutral-50 dark:hover:bg-neutral-900/50 transition-colors" hx-boost="true">
+                <div class="flex flex-col sm:flex-row sm:items-start gap-4">
+                    <!-- 日期（桌面端左侧） -->
+                    <div class="hidden sm:block sm:w-28 flex-shrink-0">
+                        <time class="text-sm text-neutral-400 dark:text-neutral-500 tabular-nums">
                             2026-05-28
                         </time>
                     </div>
-                </div>
+                    
+                    <!-- 内容区 -->
+                    <div class="flex-1 min-w-0">
+                        <h3 class="text-lg font-semibold text-neutral-900 dark:text-white group-hover:text-neutral-600 dark:group-hover:text-neutral-300 transition-colors line-clamp-2">
+                            mimo模型降价
+                        </h3>
+                        
+                        
+                        
+                        <!-- 移动端日期 -->
+                        <div class="mt-3 sm:hidden">
+                            <time class="text-xs text-neutral-400 dark:text-neutral-500 tabular-nums">
+                                2026-05-28
+                            </time>
+                        </div>
+                    </div>
 
-                <!-- 箭头 -->
-                <div class="hidden sm:flex items-center">
-                    <i class="fas fa-arrow-right text-neutral-300 dark:text-neutral-600 group-hover:text-neutral-500 dark:group-hover:text-neutral-400 group-hover:translate-x-1 transition-all"></i>
+                    <!-- 箭头 -->
+                    <div class="hidden sm:flex items-center">
+                        <i class="fas fa-arrow-right text-neutral-300 dark:text-neutral-600 group-hover:text-neutral-500 dark:group-hover:text-neutral-400 group-hover:translate-x-1 transition-all"></i>
+                    </div>
                 </div>
-            </div>
-        </a>
-    </article>
-    
+            </a>
+        </article>
+        
+    </div>
 </div>
-
-<!-- 分页 -->
 
 
 
     </div>
+
+    <!-- 搜索无结果提示 -->
+    <div id="search-empty" class="hidden text-center py-20">
+        <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-neutral-100 dark:bg-neutral-800 mb-4">
+            <i class="fas fa-search text-2xl text-neutral-400 dark:text-neutral-500"></i>
+        </div>
+        <p class="text-neutral-500 dark:text-neutral-400">没有找到匹配的文章</p>
+        <p class="text-sm text-neutral-400 dark:text-neutral-500 mt-1">试试其他关键词</p>
+    </div>
 </div>
+
+<script>
+(function() {
+    const searchInput = document.getElementById('search-input');
+    const articleList = document.getElementById('article-list');
+    const searchEmpty = document.getElementById('search-empty');
+
+    searchInput.addEventListener('input', function() {
+        const query = this.value.trim().toLowerCase();
+        const articles = articleList.querySelectorAll('article[data-title]');
+        let visibleCount = 0;
+
+        articles.forEach(function(article) {
+            const title = (article.getAttribute('data-title') || '').toLowerCase();
+            const match = !query || title.indexOf(query) !== -1;
+            article.style.display = match ? '' : 'none';
+            if (match) visibleCount++;
+        });
+
+        // 隐藏空分类组（当该分类下所有文章都被隐藏时）
+        var categoryGroups = articleList.querySelectorAll('.category-group');
+        categoryGroups.forEach(function(group) {
+            var groupArticles = group.querySelectorAll('article[data-title]');
+            var groupVisible = 0;
+            groupArticles.forEach(function(a) {
+                if (a.style.display !== 'none') groupVisible++;
+            });
+            group.style.display = groupVisible === 0 && query ? 'none' : '';
+        });
+
+        // 显示/隐藏分页
+        var nav = articleList.querySelector('nav');
+        if (nav) nav.style.display = query ? 'none' : '';
+
+        // 显示/隐藏无结果提示
+        searchEmpty.classList.toggle('hidden', visibleCount > 0);
+        articleList.style.display = visibleCount === 0 && query ? 'none' : '';
+    });
+})();
+</script>
 
 </main>
 
@@ -369,7 +432,7 @@
             </div>
         </div>
         <div class="mt-6 pt-6 border-t border-neutral-100 dark:border-neutral-800 text-center text-xs text-neutral-400 dark:text-neutral-600">
-            &copy;  Athenavi
+            &copy;  atheanvi
         </div>
     </div>
 </footer>
@@ -410,11 +473,20 @@
 
 <script>
     // 主题切换
+    function setThemeIcons(isDark) {
+        document.querySelectorAll('[data-theme-icon="light"]').forEach(el => el.style.display = isDark ? 'none' : '');
+        document.querySelectorAll('[data-theme-icon="dark"]').forEach(el => el.style.display = isDark ? '' : 'none');
+    }
+
     const themeToggle = document.getElementById('theme-toggle');
     themeToggle.addEventListener('click', () => {
         const isDark = document.documentElement.classList.toggle('dark');
         localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        setThemeIcons(isDark);
     });
+
+    // 初始化图标状态
+    setThemeIcons(document.documentElement.classList.contains('dark'));
 
     // 移动端菜单
     const mobileMenuBtn = document.getElementById('mobile-menu-btn');

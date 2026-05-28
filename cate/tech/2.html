@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>Athenavi</title>
+    <title>atheanvi</title>
     <!-- HTMX -->
     <script crossorigin="anonymous"
             integrity="sha384-D1Kt99CQMDuVetoL1lrYwg5t+9QdHe7NLX/SoJYkXDFfX37iInKRy5xLSi8nO7UC"
@@ -73,7 +73,10 @@
             }
         }
     </script>
-    <style>
+    <style type="text/tailwindcss">
+        /* 强制 class-based dark mode（兼容 Tailwind CDN v4） */
+        @custom-variant dark (&:where(.dark, .dark *));
+
         /* 全局样式 */
         body {
             font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
@@ -156,7 +159,7 @@
                 <div class="w-9 h-9 bg-neutral-900 dark:bg-white rounded-lg flex items-center justify-center transition-transform group-hover:scale-105">
                     <span class="text-white dark:text-neutral-900 font-bold text-lg">M</span>
                 </div>
-                <span class="text-lg font-semibold tracking-tight hidden sm:block">Athenavi</span>
+                <span class="text-lg font-semibold tracking-tight hidden sm:block">atheanvi</span>
             </a>
 
             <!-- 桌面端导航 -->
@@ -170,11 +173,11 @@
             <!-- 右侧操作区 -->
             <div class="flex items-center gap-2">
                 <!-- 主题切换 -->
-                <button id="theme-toggle" 
+                <button id="theme-toggle"
                         class="w-10 h-10 flex items-center justify-center rounded-full text-neutral-500 hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-white hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-all"
                         aria-label="切换主题">
-                    <i class="fas fa-sun text-lg dark:hidden"></i>
-                    <i class="fas fa-moon text-lg hidden dark:block"></i>
+                    <i data-theme-icon="light" class="fas fa-sun text-lg"></i>
+                    <i data-theme-icon="dark" class="fas fa-moon text-lg" style="display:none"></i>
                 </button>
 
                 
@@ -225,6 +228,14 @@
 
             <!-- 标题区 -->
             <header class="mb-10">
+                
+                <div class="mb-3">
+                    <a href="/#tech" class="inline-flex items-center gap-1.5 text-xs font-medium text-neutral-500 dark:text-neutral-400 bg-neutral-100 dark:bg-neutral-800 px-2.5 py-1 rounded-full hover:bg-neutral-200 dark:hover:bg-neutral-700 transition-colors">
+                        <i class="fas fa-folder text-[10px]"></i>
+                        tech
+                    </a>
+                </div>
+                
                 <h1 class="text-3xl sm:text-4xl font-bold text-neutral-900 dark:text-white leading-tight tracking-tight">
                     mimo模型降价
                 </h1>
@@ -484,7 +495,7 @@ MiMo-V2.5-Pro 的最终定价——缓存命中 **0.025 元**、未命中 **3 �
             </div>
         </div>
         <div class="mt-6 pt-6 border-t border-neutral-100 dark:border-neutral-800 text-center text-xs text-neutral-400 dark:text-neutral-600">
-            &copy;  Athenavi
+            &copy;  atheanvi
         </div>
     </div>
 </footer>
@@ -525,11 +536,20 @@ MiMo-V2.5-Pro 的最终定价——缓存命中 **0.025 元**、未命中 **3 �
 
 <script>
     // 主题切换
+    function setThemeIcons(isDark) {
+        document.querySelectorAll('[data-theme-icon="light"]').forEach(el => el.style.display = isDark ? 'none' : '');
+        document.querySelectorAll('[data-theme-icon="dark"]').forEach(el => el.style.display = isDark ? '' : 'none');
+    }
+
     const themeToggle = document.getElementById('theme-toggle');
     themeToggle.addEventListener('click', () => {
         const isDark = document.documentElement.classList.toggle('dark');
         localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        setThemeIcons(isDark);
     });
+
+    // 初始化图标状态
+    setThemeIcons(document.documentElement.classList.contains('dark'));
 
     // 移动端菜单
     const mobileMenuBtn = document.getElementById('mobile-menu-btn');
