@@ -1,21 +1,26 @@
 {
   "version": "1.0",
-  "generated_at": "2026-05-28T11:03:01.052559",
+  "generated_at": "2026-05-28T11:26:42.806968",
   "files": {
     "index.html": {
-      "hash": "03ae3e17c67bcc302daf5f5107436c32099774c60696fd56d13194057ebcc3d3",
-      "size": 22003,
-      "mtime": 1779937381.0484984
+      "hash": "5813ca06ac6515fbb22e0c5e88b6deed94a1e7aa62f6053f00154363ee8649e0",
+      "size": 23558,
+      "mtime": 1779938802.8026924
     },
     "articles/1.html": {
-      "hash": "dedf43dc4b1dbc4e2968eebc7a0d9dfb9f0a2174f88ee693fd2568c275ebae2f",
-      "size": 31206,
-      "mtime": 1779937381.0514984
+      "hash": "dcee70561331b4e02ceb523c9036330adab5f57c4c781caf85018f1a89d82d1a",
+      "size": 31182,
+      "mtime": 1779938802.8061974
     },
     "articles/2.html": {
-      "hash": "686c88b5a1b00939825476303f5153ea1db30976606d390a2f556e5ea3a7c6a9",
-      "size": 29006,
-      "mtime": 1779937381.0514984
+      "hash": "5768c0189f7b5dcd1b9482266dab872ea787321ed4609bd58984e41312a69d0c",
+      "size": 28982,
+      "mtime": 1779938802.8061974
+    },
+    "pages/html-anything-1779937642261.html": {
+      "hash": "5c5c3936599262315b2299be697ee830666c12faec46f36106afaa285254c175",
+      "size": 23559,
+      "mtime": 1779937642.263849
     },
     "static/htmx.min.js": {
       "hash": "b6768eed4f3af85b73a75054701bd60e17cac718aef2b7f6b254e5e0e2045616",

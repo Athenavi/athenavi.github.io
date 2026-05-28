@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>小米大模型杀疯了！API 进入"厘"时代</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+SC:wght@300;400;500;700;900&family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet">
+<script>
+tailwind.config = {
+  darkMode: 'media',
+  theme: {
+    extend: {
+      colors: {
+        primary: '#e84a27',
+        'primary-dark': '#c73a1e',
+        accent: '#f59e0b',
+        surface: '#faf9f7',
+        'surface-alt': '#f3f1ed',
+        ink: '#1a1a1a',
+        'ink-secondary': '#4a4a4a',
+        'ink-muted': '#7a7a7a',
+        border: '#e5e3de',
+      },
+      fontFamily: {
+        sans: ['Inter', 'Noto Sans SC', 'system-ui', 'sans-serif'],
+        serif: ['Noto Serif SC', 'Georgia', 'serif'],
+      },
+      maxWidth: {
+        article: '700px',
+      },
+      spacing: {
+        '18': '4.5rem',
+        '88': '22rem',
+      }
+    }
+  }
+}
+</script>
+<style>
+  * { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+  body { background: #faf9f7; color: #1a1a1a; }
+
+  /* Custom selection */
+  ::selection { background: #e84a2730; }
+
+  /* Ornament divider */
+  .ornament {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 2.5rem 0;
+  }
+  .ornament::before,
+  .ornament::after {
+    content: '';
+    width: 40px;
+    height: 1px;
+    background: #d4d0c8;
+  }
+  .ornament-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #e84a27;
+    flex-shrink: 0;
+  }
+
+  /* Custom list bullets */
+  .custom-list li {
+    position: relative;
+    padding-left: 1.5rem;
+  }
+  .custom-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.65em;
+    width: 8px;
+    height: 8px;
+    background: #e84a27;
+    border-radius: 2px;
+    transform: rotate(45deg);
+  }
+
+  /* Blockquote */
+  blockquote {
+    border-left: 4px solid #e84a27;
+    padding: 1rem 1.5rem;
+    margin: 1.5rem 0;
+    background: #e84a2708;
+    border-radius: 0 12px 12px 0;
+    font-style: italic;
+    color: #4a4a4a;
+  }
+
+  /* Table styles */
+  .data-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    border: 1px solid #e5e3de;
+    font-size: 0.9rem;
+  }
+  .data-table thead {
+    background: #1a1a1a;
+    color: #faf9f7;
+  }
+  .data-table th {
+    padding: 0.875rem 1rem;
+    font-weight: 600;
+    text-align: left;
+    font-size: 0.825rem;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+  }
+  .data-table td {
+    padding: 0.875rem 1rem;
+    border-bottom: 1px solid #e5e3de;
+  }
+  .data-table tbody tr:last-child td {
+    border-bottom: none;
+  }
+  .data-table tbody tr {
+    background: #faf9f7;
+    transition: background 0.2s;
+  }
+  .data-table tbody tr:nth-child(even) {
+    background: #f3f1ed;
+  }
+  .data-table tbody tr:hover {
+    background: #e84a2710;
+  }
+
+  /* Hero gradient text */
+  .gradient-text {
+    background: linear-gradient(135deg, #e84a27 0%, #f59e0b 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Tag pill */
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+  }
+
+  /* Fade in animation */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .fade-up {
+    animation: fadeUp 0.6s ease-out both;
+  }
+  .fade-up-1 { animation-delay: 0.1s; }
+  .fade-up-2 { animation-delay: 0.2s; }
+  .fade-up-3 { animation-delay: 0.3s; }
+
+  /* Highlight number */
+  .highlight-num {
+    font-size: 2.5rem;
+    font-weight: 900;
+    line-height: 1;
+    font-family: 'Inter', sans-serif;
+  }
+
+  /* Warning callout */
+  .callout-warn {
+    background: #fff7ed;
+    border: 1px solid #fed7aa;
+    border-left: 4px solid #f59e0b;
+    border-radius: 0 12px 12px 0;
+    padding: 1rem 1.5rem;
+  }
+
+  /* CTA card */
+  .cta-card {
+    background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+    border-radius: 16px;
+    padding: 2.5rem;
+    color: #faf9f7;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -30%;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, #e84a2730 0%, transparent 70%);
+    border-radius: 50%;
+  }
+
+  /* KPI stat card */
+  .kpi-card {
+    background: #faf9f7;
+    border: 1px solid #e5e3de;
+    border-radius: 12px;
+    padding: 1.25rem;
+    text-align: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .kpi-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+  }
+
+  /* Code block */
+  code {
+    font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+    background: #1a1a1a;
+    color: #f0f0f0;
+    padding: 0.15em 0.45em;
+    border-radius: 6px;
+    font-size: 0.85em;
+  }
+
+  /* Print styles */
+  @media print {
+    body { background: white; }
+    .fade-up { animation: none; opacity: 1; }
+  }
+</style>
+</head>
+<body class="min-h-screen font-sans">
+
+<!-- ===================== HERO ===================== -->
+<header class="relative overflow-hidden" style="background: linear-gradient(180deg, #1a1a1a 0%, #2d1f1f 100%);">
+  <!-- Decorative grid -->
+  <div class="absolute inset-0 opacity-5" style="background-image: radial-gradient(circle at 1px 1px, #faf9f7 1px, transparent 0); background-size: 32px 32px;"></div>
+
+  <div class="max-w-article mx-auto px-6 pt-16 pb-20 relative z-10">
+    <!-- Tag -->
+    <div class="fade-up mb-8">
+      <span class="tag bg-primary/20 text-orange-300">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        深度报道
+      </span>
+    </div>
+
+    <!-- Title -->
+    <h1 class="fade-up fade-up-1 font-sans text-4xl sm:text-5xl lg:text-6xl font-black leading-tight text-white tracking-tight">
+      小米大模型杀疯了！<br>
+      <span class="gradient-text">最高降 99%</span>，API 进入<br>"厘"时代
+    </h1>
+
+    <!-- Subtitle -->
+    <p class="fade-up fade-up-2 mt-6 text-lg text-neutral-400 leading-relaxed max-w-xl">
+      开发者白嫖指南来了——缓存命中输入低至 2.5 分钱/百万 Token，永久降价，不分档计价。
+    </p>
+
+    <!-- Meta -->
+    <div class="fade-up fade-up-3 mt-10 flex flex-wrap items-center gap-4 text-sm text-neutral-500">
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-8 rounded-full bg-primary/30 flex items-center justify-center text-xs font-bold text-orange-300">AI</div>
+        <span class="text-neutral-300 font-medium">AI 前沿观察</span>
+      </div>
+      <span class="text-neutral-600">·</span>
+      <span>2025 年 5 月 28 日</span>
+      <span class="text-neutral-600">·</span>
+      <span>阅读约 6 分钟</span>
+    </div>
+  </div>
+</header>
+
+<!-- ===================== BODY ===================== -->
+<main class="max-w-article mx-auto px-6 py-12">
+
+  <!-- Lede -->
+  <p class="text-lg leading-relaxed text-neutral-700 mb-6">
+    就在昨天凌晨，雷军亲自下场官宣：小米 MiMo-V2.5 全系列<strong class="text-ink font-semibold">永久降价</strong>，缓存命中输入价格<strong class="text-primary font-semibold">暴跌 99%</strong>！
+  </p>
+  <p class="text-lg leading-relaxed text-neutral-700 mb-6">
+    每百万 Token 的输入成本直接压到 <strong class="text-ink font-semibold">2.5 分钱</strong>（0.025 元），输出价格更是低到让友商沉默——MiMo-V2.5 标准版输出仅需 <strong class="text-ink font-semibold">2 元/百万 Token</strong>，Pro 版也只要 <strong class="text-ink font-semibold">6 元</strong>。
+  </p>
+  <p class="text-lg leading-relaxed text-neutral-700 mb-6">
+    更狠的是，小米还顺手做了一件事：<strong class="text-ink font-semibold">取消上下文窗口分档计价</strong>，再也不用来回计算 256K 还是 1M 的账单了。
+  </p>
+
+  <!-- Quick KPI cards -->
+  <div class="grid grid-cols-3 gap-4 my-10">
+    <div class="kpi-card fade-up">
+      <div class="highlight-num gradient-text">99%</div>
+      <div class="text-xs text-ink-muted mt-2 font-medium">最高降幅</div>
+    </div>
+    <div class="kpi-card fade-up fade-up-1">
+      <div class="highlight-num text-ink">¥0.025</div>
+      <div class="text-xs text-ink-muted mt-2 font-medium">输入/百万 Token<br>（缓存命中）</div>
+    </div>
+    <div class="kpi-card fade-up fade-up-2">
+      <div class="highlight-num text-ink">1M</div>
+      <div class="text-xs text-ink-muted mt-2 font-medium">上下文窗口<br>不分档计价</div>
+    </div>
+  </div>
+
+  <!-- ===== Section 1: 降价有多猛 ===== -->
+  <div class="ornament"><span class="ornament-dot"></span></div>
+
+  <h2 class="font-serif text-2xl sm:text-3xl font-bold text-ink mb-6 tracking-tight">一、降价有多猛？一张表看明白</h2>
+
+  <p class="text-lg leading-relaxed text-neutral-700 mb-8">
+    先看数据说话。下表列出 MiMo-V2.5 全系列的最新定价——缓存命中与未命中两个维度，配合输出价格和最高降幅，一目了然。
+  </p>
+
+  <div class="overflow-x-auto my-8 rounded-xl">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>模型版本</th>
+          <th>输入（命中缓存）</th>
+          <th>输入（未命中）</th>
+          <th>输出</th>
+          <th>最高降幅</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="font-semibold text-ink">MiMo-V2.5</td>
+          <td class="font-mono text-sm">¥0.020/M</td>
+          <td class="font-mono text-sm">¥1.00/M</td>
+          <td class="font-mono text-sm">¥2.00/M</td>
+          <td>
+            <span class="tag bg-green-100 text-green-700">↓ 98%</span>
+          </td>
+        </tr>
+        <tr>
+          <td class="font-semibold text-ink">MiMo-V2.5-Pro</td>
+          <td class="font-mono text-sm">¥0.025/M</td>
+          <td class="font-mono text-sm">¥3.00/M</td>
+          <td class="font-mono text-sm">¥6.00/M</td>
+          <td>
+            <span class="tag bg-primary/10 text-primary">↓ 99%</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <blockquote>
+    换算成人话：处理一部《三体》三部曲（约 90 万字），缓存命中场景下只需几分钱。
+  </blockquote>
+
+  <!-- ===== Section 2: Token Plan ===== -->
+  <div class="ornament"><span class="ornament-dot"></span></div>
+
+  <h2 class="font-serif text-2xl sm:text-3xl font-bold text-ink mb-6 tracking-tight">二、永久降价 + 套餐加量：Token Plan 直接起飞</h2>
+
+  <p class="text-lg leading-relaxed text-neutral-700 mb-4">
+    Token Plan 月费套餐<strong class="text-ink font-semibold">价格不变</strong>，但 Credits 额度暴增 <strong class="text-primary font-semibold">5~8 倍</strong>。每一个档位都拿到了夸张的额度提升：
+  </p>
+
+  <div class="overflow-x-auto my-8 rounded-xl">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>套餐</th>
+          <th>月费</th>
+          <th>调整后 Credits</th>
+          <th>增幅</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="font-semibold text-ink">Lite</td>
+          <td class="font-mono text-sm">¥39</td>
+          <td class="font-semibold text-primary">41 亿</td>
+          <td class="text-sm text-ink-muted">原 0.6 亿 · <strong class="text-green-600">≈68×</strong></td>
+        </tr>
+        <tr>
+          <td class="font-semibold text-ink">Standard</td>
+          <td class="font-mono text-sm">¥99</td>
+          <td class="font-semibold text-primary">110 亿</td>
+          <td class="text-sm text-ink-muted">原 2 亿 · <strong class="text-green-600">55×</strong></td>
+        </tr>
+        <tr>
+          <td class="font-semibold text-ink">Pro</td>
+          <td class="font-mono text-sm">¥329</td>
+          <td class="font-semibold text-primary">380 亿</td>
+          <td class="text-sm text-ink-muted">原 7 亿 · <strong class="text-green-600">≈54×</strong></td>
+        </tr>
+        <tr>
+          <td class="font-semibold text-ink">Max</td>
+          <td class="font-mono text-sm">¥659</td>
+          <td class="font-semibold text-primary">820 亿</td>
+          <td class="text-sm text-ink-muted">原 16 亿 · <strong class="text-green-600">≈51×</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout-warn my-8">
+    <p class="text-sm font-semibold text-amber-800 mb-1">
+      ⚠️ 重要提醒
+    </p>
+    <p class="text-sm text-amber-900 leading-relaxed">
+      所有仍在有效期内的 Token Plan 用户，Credits 额度已于 5 月 27 日零点<strong>全量重置</strong>！官方还预告，已过期用户也将有"惊喜好礼"。
+    </p>
+  </div>
+
+  <!-- ===== Section 3: 技术突破 ===== -->
+  <div class="ornament"><span class="ornament-dot"></span></div>
+
+  <h2 class="font-serif text-2xl sm:text-3xl font-bold text-ink mb-6 tracking-tight">三、为什么要降？不是慈善，是技术突破</h2>
+
+  <p class="text-lg leading-relaxed text-neutral-700 mb-6">
+    这次降价靠的不是芯片降价，而是<strong class="text-ink font-semibold">推理工程优化</strong>带来的实质性突破：
+  </p>
+
+  <ul class="custom-list space-y-4 text-base text-neutral-700 leading-relaxed mb-8">
+    <li>
+      基于 <code>SGLang HiCache</code> 框架，KV Cache 数据搬运量降至优化前的<strong class="text-ink font-semibold">近 1/7</strong>
+    </li>
+    <li>
+      可缓存 Token 量提升至原来的<strong class="text-ink font-semibold">近 5 倍</strong>
+    </li>
+    <li>
+      专家并行策略 + 输入长度分桶优化，大幅提升集群吞吐
+    </li>
+  </ul>
+
+  <p class="text-lg leading-relaxed text-neutral-700 mb-6">
+    小米敢于喊出"永久性翻新价格体系"，底气来自底层工程能力。
+  </p>
+
+  <!-- Tech insight mini visual -->
+  <div class="bg-ink rounded-2xl p-6 my-8 text-white">
+    <div class="text-xs uppercase tracking-widest text-neutral-500 mb-4 font-semibold">核心技术栈</div>
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+      <div class="bg-white/5 border border-white/10 rounded-xl p-4">
+        <div class="text-2xl font-black text-primary font-sans">1/7</div>
+        <div class="text-sm text-neutral-400 mt-1">KV Cache 搬运量</div>
+      </div>
+      <div class="bg-white/5 border border-white/10 rounded-xl p-4">
+        <div class="text-2xl font-black text-accent font-sans">5×</div>
+        <div class="text-sm text-neutral-400 mt-1">可缓存 Token 量</div>
+      </div>
+      <div class="bg-white/5 border border-white/10 rounded-xl p-4">
+        <div class="text-2xl font-black text-green-400 font-sans">SGLang</div>
+        <div class="text-sm text-neutral-400 mt-1">HiCache 框架</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Section 4: 对标 DeepSeek ===== -->
+  <div class="ornament"><span class="ornament-dot"></span></div>
+
+  <h2 class="font-serif text-2xl sm:text-3xl font-bold text-ink mb-6 tracking-tight">四、对标 DeepSeek，国产大模型进入"成本定价"时代</h2>
+
+  <p class="text-lg leading-relaxed text-neutral-700 mb-6">
+    MiMo-V2.5-Pro 的最终定价——缓存命中 <strong class="text-ink font-semibold">0.025 元</strong>、未命中 <strong class="text-ink font-semibold">3 元</strong>、输出 <strong class="text-ink font-semibold">6 元</strong>——与 DeepSeek V4-Pro 刚刚敲定的永久价格<strong class="text-primary font-semibold">完全一致</strong>。
+  </p>
+
+  <blockquote>
+    这不是巧合。大模型 API 的定价逻辑，正在从"能力溢价"转向"成本导向"。谁的推理效率更高，谁就能把价格压得更低。
+  </blockquote>
+
+  <p class="text-lg leading-relaxed text-neutral-700 mb-6">
+    国产大模型的价格战，已经从参数榜单打到了<strong class="text-ink font-semibold">推理框架和集群调度</strong>的层面。
+  </p>
+
+  <!-- ===== Section 5: 开源完全体 ===== -->
+  <div class="ornament"><span class="ornament-dot"></span></div>
+
+  <h2 class="font-serif text-2xl sm:text-3xl font-bold text-ink mb-6 tracking-tight">五、开源 + 1M 上下文 + 顶级 Agent 能力，这才是完全体</h2>
+
+  <p class="text-lg leading-relaxed text-neutral-700 mb-6">
+    很多人不知道，MiMo-V2.5 系列早已<strong class="text-ink font-semibold">全面开源</strong>，支持商用部署和自由微调。MiMo-V2.5-Pro 拥有 <strong class="text-ink font-semibold">1T 超大参数</strong>、<strong class="text-ink font-semibold">100 万 Token 上下文窗口</strong>，在通用智能体和复杂软件工程维度上，正面对标 <strong class="text-ink font-semibold">Claude Opus 4.6、GPT-5.4</strong> 等国际顶尖模型。
+  </p>
+
+  <!-- Capability badges -->
+  <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 my-8">
+    <div class="bg-surface-alt border border-border rounded-xl p-4 text-center">
+      <svg class="w-6 h-6 mx-auto mb-2 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+      <div class="text-sm font-semibold text-ink">1T 参数</div>
+    </div>
+    <div class="bg-surface-alt border border-border rounded-xl p-4 text-center">
+      <svg class="w-6 h-6 mx-auto mb-2 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+      <div class="text-sm font-semibold text-ink">1M 上下文</div>
+    </div>
+    <div class="bg-surface-alt border border-border rounded-xl p-4 text-center">
+      <svg class="w-6 h-6 mx-auto mb-2 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg>
+      <div class="text-sm font-semibold text-ink">全面开源</div>
+    </div>
+    <div class="bg-surface-alt border border-border rounded-xl p-4 text-center">
+      <svg class="w-6 h-6 mx-auto mb-2 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+      <div class="text-sm font-semibold text-ink">Agent 能力</div>
+    </div>
+  </div>
+
+  <p class="text-lg leading-relaxed text-neutral-700 mb-6">
+    如今价格打到"白菜价"，对于 <strong class="text-ink font-semibold">AI Agent、代码助手、长文档处理、知识库问答</strong> 等场景来说，正是批量落地的最佳时机。
+  </p>
+
+  <!-- ===== Section 6: 新用户福利 ===== -->
+  <div class="ornament"><span class="ornament-dot"></span></div>
+
+  <h2 class="font-serif text-2xl sm:text-3xl font-bold text-ink mb-6 tracking-tight">🎁 新用户专属福利</h2>
+
+  <p class="text-lg leading-relaxed text-neutral-700 mb-6">
+    扫描下方二维码或点击「阅读原文」注册小米 MiMo 开放平台，在控制台侧边栏输入下方邀请码，即可<strong class="text-ink font-semibold">免费获得 ¥10 API 体验金</strong>，零成本体验 MiMo-V2.5 系列的顶级性能！
+  </p>
+
+  <!-- Invitation code card -->
+  <div class="bg-surface-alt border border-border rounded-2xl p-6 my-8">
+    <div class="flex items-start gap-4">
+      <div class="flex-shrink-0 w-12 h-12 bg-primary/10 rounded-xl flex items-center justify-center">
+        <svg class="w-6 h-6 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M7 15h0M2 9.5h20"/></svg>
+      </div>
+      <div>
+        <div class="text-xs text-ink-muted font-medium uppercase tracking-wider mb-1">邀请码</div>
+        <div class="text-3xl font-black font-mono text-primary tracking-widest select-all">GXX44R</div>
+      </div>
+    </div>
+    <div class="mt-4 pt-4 border-t border-border">
+      <p class="text-sm text-ink-secondary leading-relaxed">
+        <strong>入口：</strong>注册后进入控制台 → 左侧菜单栏「邀请码」输入框 → 填入 <code class="text-primary bg-primary/10">GXX44R</code> → 额度即时到账
+      </p>
+    </div>
+  </div>
+
+  <p class="text-lg leading-relaxed text-neutral-700 mb-10">
+    降价窗口刚开，现在入场就是最佳时机。用 MiMo-V2.5 搞出你的第一个爆款 AI 应用吧！
+  </p>
+
+  <!-- ===== CTA Card ===== -->
+  <div class="cta-card my-12">
+    <div class="relative z-10">
+      <h3 class="font-serif text-xl font-bold text-white mb-3">如果觉得有用，欢迎转发</h3>
+      <p class="text-neutral-400 text-sm leading-relaxed mb-6 max-w-md">
+        把这篇降价解读分享给身边做 AI 开发的朋友，帮他们省下真金白银。
+      </p>
+      <div class="flex flex-wrap gap-3">
+        <button class="inline-flex items-center gap-2 bg-primary hover:bg-primary-dark text-white text-sm font-semibold px-5 py-2.5 rounded-xl transition-colors focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2 focus:ring-offset-ink">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+          分享文章
+        </button>
+        <button class="inline-flex items-center gap-2 bg-white/10 hover:bg-white/15 text-white text-sm font-semibold px-5 py-2.5 rounded-xl transition-colors focus:outline-none focus:ring-2 focus:ring-white/30 focus:ring-offset-2 focus:ring-offset-ink">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+          收藏
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Footer ===== -->
+  <div class="ornament"><span class="ornament-dot"></span></div>
+
+  <footer class="text-sm text-ink-muted leading-relaxed space-y-3 pb-16">
+    <p>
+      <strong class="text-ink-secondary">参考资料：</strong>小米 MiMo 官方公告、IT之家、观察者网、西部e网、站长之家等。
+    </p>
+    <p class="text-xs text-neutral-400">
+      （本文含作者邀请码，通过该码注册新用户双方均可获得 ¥10 额度，感谢支持！）
+    </p>
+  </footer>
+
+</main>
+
+</body>
+</html>
